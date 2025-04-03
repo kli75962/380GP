@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import s380f.gp.s380f.model.User;
-import s380f.gp.s380f.dao.UserService;
+import s380f.gp.s380f.Service.UserService;
 
 import jakarta.validation.Valid;
 

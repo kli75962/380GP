@@ -1,30 +1,28 @@
 package s380f.gp.s380f.model;
 
 import jakarta.persistence.*;
-import org.h2.table.Table;
+
 
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-  @Column(name = "name")
+  @Column(name = "USERNAME")
   private String username;
+  @Column(name = "PASSWORD")
   private String password;
+  @Column(name = "NAME")
   private String name;
+  @Column(name = "EMAIL")
   private String email;
+  @Column(name = "PHONE")
   private String phoneNumber;
+  @Column(name = "ROLE")
   private String role;
 
-  public User(String username, String password, String name, String email, String phone, String role) {
-    this.username = username;
-    this.password = password;
-    this.name = name;
-    this.email = email;
-    this.phoneNumber = phone;
-    this.role = role;
-  }
+
   public long getId() {
     return id;
   }
