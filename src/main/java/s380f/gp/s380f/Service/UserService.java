@@ -30,7 +30,7 @@ public class UserService {
                 userRepository.save(user);
         }
 
-        public User loginUser(String email , String password) {
+        public User loginUser(String email, String password) {
                 // 通过邮箱查找用户
                 User user = userRepository.findByUsername(email)
                                 .orElseThrow(() -> new RuntimeException("User not found"));
