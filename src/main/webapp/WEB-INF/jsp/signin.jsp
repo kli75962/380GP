@@ -175,13 +175,19 @@
     <body>
 
         <div class="nav">
-            <a href="index.jsp">Home</a>
+            <a href="<c:url value='/'/>">Home</a>
         </div>
 
         <div class="login-container">
             <h1>Sign In to Course Portal</h1>
 
-            <form action="/login" method="post">
+            <c:if test="${not empty error}">
+                <div class="error-message" style="color: #e74c3c; margin-bottom: 15px; text-align: center;">
+                    ${error}
+                </div>
+            </c:if>
+
+            <form action="<c:url value='/loginAc'/>" method="post">
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" id="email" name="email" required placeholder="your.email@university.edu">
@@ -192,29 +198,11 @@
                     <input type="password" id="password" name="password" required placeholder="Enter your password">
                 </div>
 
-                <div class="form-group role-selector">
-                    <label>I am a:</label>
-                    <div class="role-options">
-                        <div class="role-option">
-                            <input type="radio" id="student" name="role" value="student" checked>
-                            <label for="student">Student</label>
-                        </div>
-                        <div class="role-option">
-                            <input type="radio" id="teacher" name="role" value="teacher">
-                            <label for="teacher">Teacher</label>
-                        </div>
-                        <div class="role-option">
-                            <input type="radio" id="ta" name="role" value="ta">
-                            <label for="admin">Admin</label>
-                        </div>
-                    </div>
-                </div>
-
                 <button type="submit" class="login-btn">Sign In</button>
 
                 <div class="secondary-actions">
                     <a href="#" onclick="return showForgotPasswordAlert()">Forgot password?</a>
-                    <a href="/registration.jsp">Create account</a>
+                    <a href="<c:url value='/register'/>">Create account</a>
                 </div>
 
                 <div class="divider">

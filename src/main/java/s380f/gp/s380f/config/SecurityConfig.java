@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -16,30 +17,34 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-        .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(
-                new AntPathRequestMatcher("/"),
-                new AntPathRequestMatcher("/index"),
-                new AntPathRequestMatcher("/login"),
-                new AntPathRequestMatcher("/register"),
-                new AntPathRequestMatcher("/css/**"),
-                new AntPathRequestMatcher("/js/**"),
-                new AntPathRequestMatcher("/images/**"))
-            .permitAll()
-            .requestMatchers("/student/**").hasAnyRole("STUDENT", "TEACHER")
-            .requestMatchers("/teacher/**").hasAnyRole("TEACHER")
-            .anyRequest().authenticated())
-        .formLogin(form -> form
-            .loginPage("/login")
-            .loginProcessingUrl("/login")
-            .defaultSuccessUrl("/dashboard")
-            .failureUrl("/login?error=true")
-            .permitAll())
-        .logout(logout -> logout
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/")
-            .permitAll());
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(authorize -> authorize
+                    .requestMatchers("/student/**").hasAnyRole("STUDENT", "TEACHER")
+                    .requestMatchers("/teacher/**").hasAnyRole("TEACHER")
+                    .anyRequest().permitAll()
+            )
+            .exceptionHandling(exception -> exception
+                    .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/index"))
+                    .accessDeniedHandler((request, response, accessDeniedException) -> {
+                      response.sendRedirect("/index");
+                    })
+            )
+            .formLogin(form -> form
+                    .loginPage("/login")
+                    .loginProcessingUrl("/login")
+                    .permitAll()
+            )
+            .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/")
+                    .permitAll()
+
+            )
+//            .rememberMe(rememberMe -> rememberMe
+//                    .key("uniqueAndSecret") // use a unique key
+//                    .rememberMeParameter("remember-me")
+//                    .tokenValiditySeconds(86400))
+    ;
     return http.build();
   }
 }

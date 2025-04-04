@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -148,6 +147,7 @@
     <div class="register-container">
         <h1>Create Your Account</h1>
         
+        <%--@elvariable id="user" type=""--%>
         <form:form action="${pageContext.request.contextPath}/register" method="post" modelAttribute="user">
             <div class="form-group">
                 <form:label path="username">Username</form:label>
@@ -168,9 +168,9 @@
             </div>
             
             <div class="form-group">
-                <form:label path="phone">Phone Number</form:label>
-                <form:input path="phone" type="tel" placeholder="27112100"/>
-                <form:errors path="phone" cssClass="error"/>
+                <form:label path="phoneNumber">Phone Number</form:label>
+                <form:input path="phoneNumber" type="tel" placeholder="27112100"/>
+                <form:errors path="phoneNumber" cssClass="error"/>
             </div>
             
             <div class="form-group">

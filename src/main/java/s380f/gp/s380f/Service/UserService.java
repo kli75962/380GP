@@ -31,21 +31,17 @@ public class UserService {
         }
 
         public User loginUser(String email, String password) {
-                // 通过邮箱查找用户
-                User user = userRepository.findByUsername(email)
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+
+                Optional<User> userOpt = userRepository.findByEmail(email);
+                if (userOpt.isEmpty()) {
+                        throw new RuntimeException("No user found with this email");
+                }
+                User user = userOpt.get();
                 if (!user.getPassword().equals(password)) {
                         throw new RuntimeException("Invalid password");
                 }
                 return user;
         }
 
-        public boolean isUsernameExists(String username) {
-                return userRepository.findByUsername(username).isPresent();
-        }
-
-        public boolean isEmailExists(String email) {
-                return userRepository.findByEmail(email).isPresent();
-        }
 
 }

@@ -92,7 +92,14 @@
 </head>
 <body>
     <div class="login-status">
-        <a href="signin.jsp">Sign In</a> | <a href="registration.jsp">Register</a>
+        <c:choose>
+            <c:when test="${not empty user}">
+                Welcome, ${user.username} | <a href="<c:url value='/logout'/>">Logout</a>
+            </c:when>
+            <c:otherwise>
+                <a href="<c:url value='/login'/>">Sign In</a> | <a href="<c:url value='/register'/>">Register</a>
+            </c:otherwise>
+        </c:choose>
     </div>
 
     <div class="header">
