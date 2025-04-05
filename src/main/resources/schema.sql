@@ -7,3 +7,30 @@ CREATE TABLE IF NOT EXISTS users (
     phone VARCHAR(20),
     role VARCHAR(20) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS course (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS lecture (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    course_id BIGINT,
+    FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS lecture_download_links (
+    lecture_id BIGINT NOT NULL,
+    download_links VARCHAR(255),
+    FOREIGN KEY (lecture_id) REFERENCES lecture(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS comment (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    timestamp TIMESTAMP,
+    lecture_id BIGINT,
+    FOREIGN KEY (lecture_id) REFERENCES lecture(id) ON DELETE CASCADE
+);
