@@ -1139,3 +1139,6 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 2025-04-05 14:54:45.179748+08:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE FROM users[*], course, lecture, lecture_download_links, comment"; SQL statement:
 DELETE FROM users, course, lecture, lecture_download_links, comment [42000-232]
+2025-04-05 21:20:55.058743+08:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO users (username, password, name, email, phone, role) VALUES ('john_doe', '123', 'John Doe', '1@1', '1234567890', 'STUDENT'), ('jane_smith', 'hashed_password_here', 'Jane Smith', 'jane.smith@example.com', '0987654321', 'ADMIN'), INSERT [*]INTO course (id, title) VALUES (1, 'Spring Boot Fundamentals')"; SQL statement:
+INSERT INTO users (username, password, name, email, phone, role) VALUES ('john_doe', '123', 'John Doe', '1@1', '1234567890', 'STUDENT'), ('jane_smith', 'hashed_password_here', 'Jane Smith', 'jane.smith@example.com', '0987654321', 'ADMIN'), INSERT INTO course (id, title) VALUES (1, 'Spring Boot Fundamentals') [42000-232]

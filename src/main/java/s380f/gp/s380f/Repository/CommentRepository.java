@@ -6,5 +6,5 @@ import s380f.gp.s380f.model.Comment;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findByCourseId(Long courseId);
+    List<Comment> findByLectureId(Long lectureId);
 }

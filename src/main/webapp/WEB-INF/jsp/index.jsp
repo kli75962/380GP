@@ -116,20 +116,15 @@
     <div class="section">
         <h2>Lectures</h2>
         <ul class="lecture-list">
-            <li class="lecture-item">
-                <div class="lecture-title">Introduction to Web Development</div>
-                <div class="lecture-date">Posted: March 10, 2025</div>
-            </li>
-            <li class="lecture-item">
-                <div class="lecture-title">Jakarta EE Fundamentals</div>
-                <div class="lecture-date">Posted: March 17, 2025</div>
-            </li>
-            <li class="lecture-item">
-                <div class="lecture-title">Spring Framework Overview</div>
-                <div class="lecture-date">Posted: March 24, 2025</div>
-            </li>
+            <c:forEach var="lecture" items="${lectures}">
+                <li class="lecture-item">
+                    <div class="lecture-title">${lecture.title}</div>
+                    <!-- You can display additional lecture info like download links, comments, etc. -->
+                </li>
+            </c:forEach>
         </ul>
     </div>
+
 
     <div class="section">
         <h2>Current Polls</h2>
