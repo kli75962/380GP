@@ -88,6 +88,68 @@
             color: #3498db;
             text-decoration: none;
         }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .comment-section {
+            margin-top: 40px;
+        }
+        .comment-form {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            min-height: 100px;
+        }
+        .comment {
+            border-left: 3px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+        }
+        .comment-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .comment-meta {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        .role-teacher {
+            color: #e74c3c;
+        }
+        .role-ta {
+            color: #f39c12;
+        }
+        .role-student {
+            color: #27ae60;
+        }
+        .login-prompt {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
         .lecture-item a {
             text-decoration: none; /* Disable the underline */
         }
@@ -107,7 +169,7 @@
 
 
 <div class="header">
-    <h1>Lecture Material: ${lectureTitle}</h1>
+    <h1>Lecture Material: ${lectureTitle}, ${lectureId}</h1>
 </div>
 
 <div class="nav">
@@ -134,22 +196,41 @@
     </c:if>
 </div>
 
-<div class="section">
-    <h2>Comments</h2>
-    <!-- Display comments -->
-    <c:if test="${not empty comments}">
-        <ul class="comments">
-            <c:forEach var="comment" items="${comments}">
-                <li>${comment}</li> <!-- Display the content of each comment -->
-            </c:forEach>
-        </ul>
-    </c:if>
+<div class="comment-section">
+    <h2>Discussion</h2>
+    <!-- Hidden comment input box -->
+    <div class="comment-form" id="comment-form">
+        <form method="post" action="submitComment">
+            <input type="hidden" name="lectureId" value="${lectureId}" />
+            <textarea name="comment" placeholder="Share your thoughts about this poll..."></textarea><br>
+            <button type="submit">Post Comment</button>
+        </form>
+    </div>
 
-    <!-- If no comments, show a message -->
-    <c:if test="${empty comments}">
-        <p>No comments for this lecture.</p>
-    </c:if>
+    <h3>Previous Comments</h3>
+    <!-- Display comments -->
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+    <div class="comment">
+        <c:if test="${not empty comments}">
+            <ul class="comments">
+                <c:forEach var="comment" items="${comments}" varStatus="status">
+                    <div class="comment-header">
+                        <span class="role-student">${comment.username}</span>
+                    </div>
+                    <!-- Accessing the corresponding timestamp for each comment using the index -->
+                    <div class="comment-meta">${formattedTimestamps[status.index]}</div>
+                    <li class="comment-body">${comment.content}</li>
+                </c:forEach>
+            </ul>
+        </c:if>
+
+
+        <c:if test="${empty comments}">
+            <p>No comments for this lecture.</p>
+        </c:if>
+    </div>
 </div>
+
 
 </body>
 </html>

@@ -34,9 +34,9 @@ INSERT INTO lecture_download_links (lecture_id, download_links) VALUES (3, 'http
 INSERT INTO lecture_download_links (lecture_id, download_links) VALUES (4, 'https://example.com/jpa-transactions.pdf');
 
 -- Insert Comments
-INSERT INTO comment (id, username, content, timestamp, lecture_id) VALUES
-(1, 'alice', 'Great intro!', CURRENT_TIMESTAMP, 1),
-(2, 'bob', 'Could you explain more about @SpringBootApplication?', CURRENT_TIMESTAMP, 1),
-(3, 'teacher_mike', 'I added more notes on slide 5.', CURRENT_TIMESTAMP, 1),
-(4, 'charlie', 'Helpful H2 tutorial, thanks!', CURRENT_TIMESTAMP, 2),
-(5, 'alice', 'Jakarta EE is quite verbose 😅', CURRENT_TIMESTAMP, 3);
+INSERT INTO comment (username, content, timestamp, lecture_id) VALUES
+('alice', 'Great intro!', CURRENT_TIMESTAMP, 1),
+('bob', 'Could you explain more about @SpringBootApplication?', CURRENT_TIMESTAMP, 1),
+('teacher_mike', 'I added more notes on slide 5.', CURRENT_TIMESTAMP, 1),
+('charlie', 'Helpful H2 tutorial, thanks!', CURRENT_TIMESTAMP, 2),
+('alice', 'Jakarta EE is quite verbose 😅', CURRENT_TIMESTAMP, 3);
