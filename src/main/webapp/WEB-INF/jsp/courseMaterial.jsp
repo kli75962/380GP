@@ -94,53 +94,62 @@
     </style>
 </head>
 <body>
-    <div class="login-status">
-        <c:choose>
-            <c:when test="${not empty user}">
-                Welcome, ${user.username} | <a href="<c:url value='/logout'/>">Logout</a>
-            </c:when>
-            <c:otherwise>
-                <a href="<c:url value='/login'/>">Sign In</a> | <a href="<c:url value='/register'/>">Register</a>
-            </c:otherwise>
-        </c:choose>
-    </div>
+<div class="login-status">
+    <c:choose>
+        <c:when test="${not empty user}">
+            Welcome, ${user.username} | <a href="<c:url value='/logout'/>">Logout</a>
+        </c:when>
+        <c:otherwise>
+            <a href="<c:url value='/login'/>">Sign In</a> | <a href="<c:url value='/register'/>">Register</a>
+        </c:otherwise>
+    </c:choose>
+</div>
 
-    <div class="header">
-        <h1>Web Applications: Design and Development</h1>
-        <div class="course-code">COMP 3820SEF / S380F / S380W</div>
-    </div>
 
-    <div class="nav">
-        <a href="index.jsp">Home</a>
-        <a href="#">Lectures</a>
-        <a href="#">Polls</a>
-    </div>
+<div class="header">
+    <h1>Lecture Material: ${lectureTitle}</h1>
+</div>
 
-    <div class="section">
-        <h2>Lectures</h2>
-        <ul class="lecture-list">
-            <c:forEach var="lecture" items="${lectures}">
-                <li class="lecture-item">
-                    <a href="<c:url value='/courseMaterial?title=${lecture.title}&id=${lecture.id}'/>">
-                        <div class="lecture-title">${lecture.title}</div>
-                    </a>
-                </li>
+<div class="nav">
+    <a href="index.jsp">Home</a>
+    <a href="#">Lectures</a>
+    <a href="#">Polls</a>
+</div>
+
+<div class="section">
+    <h2>lecture notes</h2>
+    <!-- Display download links -->
+    <c:if test="${not empty downloadLinks}">
+        <h3>Download Links:</h3>
+        <ul class="download-links">
+            <c:forEach var="link" items="${downloadLinks}">
+                <li><a href="${link}" target="_blank">${link}</a></li>
             </c:forEach>
         </ul>
-    </div>
+    </c:if>
 
-    <div class="section">
-        <h2>Current Polls</h2>
-        <ul class="poll-list">
-            <li class="poll-item" onclick="window.location.href='poll.jsp'">
-                <div class="poll-question">Which date do you prefer for the mid-term test?</div>
-                <div class="poll-status">Voting open until April 7, 2025</div>
-            </li>
-            <li class="poll-item">
-                <div class="poll-question">Which topic would you like more practice with?</div>
-                <div class="poll-status">Voting open until April 14, 2025</div>
-            </li>
+    <!-- If no download links, show a message -->
+    <c:if test="${empty downloadLinks}">
+        <p>No download links available for this lecture.</p>
+    </c:if>
+</div>
+
+<div class="section">
+    <h2>Comments</h2>
+    <!-- Display comments -->
+    <c:if test="${not empty comments}">
+        <ul class="comments">
+            <c:forEach var="comment" items="${comments}">
+                <li>${comment}</li> <!-- Display the content of each comment -->
+            </c:forEach>
         </ul>
-    </div>
+    </c:if>
+
+    <!-- If no comments, show a message -->
+    <c:if test="${empty comments}">
+        <p>No comments for this lecture.</p>
+    </c:if>
+</div>
+
 </body>
 </html>
