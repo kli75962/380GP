@@ -16,7 +16,6 @@ import java.util.List;
 
 @Controller
 public class LoginController {
-
   @Autowired
   private UserService userService;
   @Autowired
@@ -41,7 +40,6 @@ public class LoginController {
       if (user.getRole().equalsIgnoreCase("student")) {
         session.setAttribute("user", user);
         session.setAttribute("lectures", lectures);
-        System.out.println("asdfasdfsadf86sa8f76as8f");
         return "redirect:/index";
       } else {
         model.addAttribute("error", "Invalid credentials or role mismatch");
