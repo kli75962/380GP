@@ -14,6 +14,8 @@ DELETE FROM course;
 INSERT INTO users (username, password, name, email, phone, role)
 VALUES
     ('john doe', '123', 'John Doe', '1@1', '1234567890', 'TEACHER'),
+    ('john ', '123', 'John Doe', '1@123', '1234567890', 'TEACHER'),
+    ('john123', '123', 'John Doe', '1@13454', '1234567890', 'STUDENT'),
     ('jane smith', 'hashed_password_here', 'Jane Smith', 'jane.smith@example.com', '0987654321', 'ADMIN');
 
 -- Insert Courses

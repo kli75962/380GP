@@ -94,6 +94,21 @@
         .btn-danger:hover {
             background-color: #c0392b;
         }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
 <body>
@@ -107,26 +122,38 @@
     </div>
 
     <div class="profile-container">
+        <c:if test="${not empty successMessage}">
+            <div class="alert alert-success">
+                ${successMessage}
+            </div>
+        </c:if>
+        
+        <c:if test="${not empty errorMessage}">
+            <div class="alert alert-danger">
+                ${errorMessage}
+            </div>
+        </c:if>
+        
         <form action="/updateProfile" method="post">
             <div class="form-row">
                 <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" value="John" required>
+                    <input type="text" id="firstName" name="firstName" value="${user.name.split(' ')[0]}" required>
                 </div>
                 <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" value="Doe" required>
+                    <input type="text" id="lastName" name="lastName" value="${user.name.split(' ')[1]}" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="john.doe@university.edu" required>
+                <input type="email" id="email" name="email" value="${user.email}" required>
             </div>
 
             <div class="form-group">
                 <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" value="(123) 456-7890">
+                <input type="tel" id="phone" name="phone" value="${user.phoneNumber}">
             </div>
 
             <div class="form-group">

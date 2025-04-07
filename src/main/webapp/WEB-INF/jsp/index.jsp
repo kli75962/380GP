@@ -91,13 +91,29 @@
         .lecture-item a {
             text-decoration: none; /* Disable the underline */
         }
+        .username-link {
+            font-weight: bold;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .username-link:hover {
+            text-decoration: underline;
+        }
+        .nav-link {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="login-status">
         <c:choose>
             <c:when test="${not empty user}">
-                Welcome, ${user.username} | <a href="<c:url value='/logout'/>">Logout</a>
+                Welcome, <a href="<c:url value='/userEdit'/>" class="username-link">${user.username}</a> | <a href="<c:url value='/logout'/>">Logout</a>
             </c:when>
             <c:otherwise>
                 <a href="<c:url value='/login'/>">Sign In</a> | <a href="<c:url value='/register'/>">Register</a>
@@ -111,9 +127,21 @@
     </div>
 
     <div class="nav">
-        <a href="<c:url value='/'/>">Home</a>
-        <a href="#">Lectures</a>
-        <a href="#">Polls</a>
+        <a href="<c:url value='/'/>" class="nav-link">Home</a>
+        <a href="<c:url value='/courseMaterials'/>" class="nav-link">Course Materials</a>
+        <a href="<c:url value='/polls'/>" class="nav-link">Polls</a>
+        
+        <c:if test="${not empty user && user.role eq 'TEACHER'}">
+            <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
+        </c:if>
+        
+        <c:if test="${empty user}">
+            <a href="<c:url value='/login'/>" class="nav-link">Login</a>
+            <a href="<c:url value='/register'/>" class="nav-link">Register</a>
+        </c:if>
+        <c:if test="${not empty user}">
+            <a href="<c:url value='/logout'/>" class="nav-link">Logout</a>
+        </c:if>
     </div>
 
     <div class="section">

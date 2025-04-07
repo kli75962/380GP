@@ -2,7 +2,6 @@ package s380f.gp.s380f.model;
 
 import jakarta.persistence.*;
 
-
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -21,7 +20,6 @@ public class User {
   private String phoneNumber;
   @Column(name = "ROLE")
   private String role;
-
 
   public long getId() {
     return id;
@@ -78,5 +76,4 @@ public class User {
   public void setRole(String role) {
     this.role = role;
   }
-  // setters of all properties
 }
