@@ -17,7 +17,6 @@ import s380f.gp.s380f.Repository.CourseMaterialRepository;
 import s380f.gp.s380f.Repository.UserRepository;
 import s380f.gp.s380f.Service.CommentService;
 import s380f.gp.s380f.Service.CourseMaterialService;
-import s380f.gp.s380f.Service.LectureNoteService;
 import s380f.gp.s380f.model.Comment;
 import s380f.gp.s380f.model.CourseMaterial;
 import s380f.gp.s380f.model.User;
@@ -32,8 +31,6 @@ import java.util.Optional;
 @Controller
 public class CourseMaterialController {
 
-    @Autowired
-    private LectureNoteService lectureNoteService;
     @Autowired
     private CommentService commentService;
     @Autowired
@@ -55,7 +52,6 @@ public class CourseMaterialController {
         User user = (User) session.getAttribute("user");
         String username = user.getName();
 
-        List<String> downloadLinks = lectureNoteService.getDownloadLinksForLecture(lectureId);
         List<Comment> comments = commentRepository.findByLectureId(lectureId);
         List<CourseMaterial> materials = courseMaterialRepository.findByLectureId(lectureId);
 
@@ -70,7 +66,6 @@ public class CourseMaterialController {
         model.addAttribute("materials", materials);
         model.addAttribute("lectureTitle", title);
         model.addAttribute("lectureId", lectureId);
-        model.addAttribute("downloadLinks", downloadLinks);
         model.addAttribute("comments", comments);
 
         return "courseMaterial";
