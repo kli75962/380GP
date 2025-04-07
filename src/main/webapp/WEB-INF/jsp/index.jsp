@@ -118,16 +118,35 @@
 
     <div class="section">
         <h2>Lectures</h2>
+
+        <c:if test="${user.role eq 'TEACHER'}">
+            <button onclick="toggleLectureInput()">Add New</button>
+            <form id="lectureForm" action="<c:url value='/addLecture'/>" method="post" style="display: none; margin-top: 5px;">
+                <input type="text" name="title" placeholder="Enter lecture title" required />
+                <button type="submit">Submit</button>
+            </form>
+        </c:if>
+
         <ul class="lecture-list">
             <c:forEach var="lecture" items="${lectures}">
                 <li class="lecture-item">
                     <a href="<c:url value='/courseMaterial?title=${lecture.title}&id=${lecture.id}'/>">
                         <div class="lecture-title">${lecture.title}</div>
                     </a>
+
+                    <!-- Show delete button only if user is a teacher -->
+                    <c:if test="${user.role eq 'TEACHER'}">
+                        <form action="<c:url value='/deleteLecture'/>" method="post" style="display:inline;">
+                            <input type="hidden" name="lectureId" value="${lecture.id}" />
+                            <button type="submit" style="margin-left: 10px; color: red;">Delete</button>
+                        </form>
+                    </c:if>
                 </li>
             </c:forEach>
         </ul>
+
     </div>
+
 
     <div class="section">
         <h2>Current Polls</h2>
@@ -143,4 +162,11 @@
         </ul>
     </div>
 </body>
+<script>
+    function toggleLectureInput() {
+        const form = document.getElementById('lectureForm');
+        form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+    }
+</script>
+
 </html>
