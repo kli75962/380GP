@@ -20,12 +20,6 @@ CREATE TABLE IF NOT EXISTS lecture (
     FOREIGN KEY (course_id) REFERENCES course(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS lecture_download_links (
-    lecture_id BIGINT NOT NULL,
-    download_links VARCHAR(255),
-    FOREIGN KEY (lecture_id) REFERENCES lecture(id) ON DELETE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS comment (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,

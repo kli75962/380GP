@@ -27,13 +27,6 @@ INSERT INTO lecture (id, title, course_id) VALUES (2, 'Spring Boot with H2', 1);
 INSERT INTO lecture (id, title, course_id) VALUES (3, 'Jakarta EE Basics', 1);
 INSERT INTO lecture (id, title, course_id) VALUES (4, 'JPA and Transactions', 1);
 
--- Insert Download Links
-INSERT INTO lecture_download_links (lecture_id, download_links) VALUES (1, 'https://example.com/springboot-intro.pdf');
-INSERT INTO lecture_download_links (lecture_id, download_links) VALUES (1, 'https://example.com/springboot-slides.pptx');
-INSERT INTO lecture_download_links (lecture_id, download_links) VALUES (2, 'https://example.com/h2-setup.pdf');
-INSERT INTO lecture_download_links (lecture_id, download_links) VALUES (3, 'https://example.com/jakartaee-basics.pdf');
-INSERT INTO lecture_download_links (lecture_id, download_links) VALUES (4, 'https://example.com/jpa-transactions.pdf');
-
 -- Insert Comments
 INSERT INTO comment (username, content, timestamp, lecture_id) VALUES
 ('alice', 'Great intro!', CURRENT_TIMESTAMP, 1),
