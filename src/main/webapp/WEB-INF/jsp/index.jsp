@@ -111,7 +111,7 @@
     </div>
 
     <div class="nav">
-        <a href="index.jsp">Home</a>
+        <a href="<c:url value='/'/>">Home</a>
         <a href="#">Lectures</a>
         <a href="#">Polls</a>
     </div>

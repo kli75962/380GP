@@ -22,4 +22,8 @@ public class CourseMaterialService {
 
         courseMaterialRepository.save(courseMaterial);
     }
+
+    public void deleteMaterial(Long materialId) {
+        courseMaterialRepository.deleteById(materialId);
+    }
 }

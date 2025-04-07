@@ -30,7 +30,11 @@ public class LoginController {
       HttpSession session) {
     try {
       User user = userService.loginUser(email, password);
-      if (user.getRole().equalsIgnoreCase("student")) {
+      String role = user.getRole();
+      if (role != null && (
+              role.equalsIgnoreCase("student") ||
+                      role.equalsIgnoreCase("teacher") ||
+                      role.equalsIgnoreCase("admin"))) {
         session.setAttribute("user", user);
         return "redirect:/index";
       } else {

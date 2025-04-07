@@ -169,11 +169,11 @@
 
 
 <div class="header">
-    <h1>Lecture Material: ${lectureTitle}, ${lectureId}</h1>
+    <h1>Lecture Material: ${lectureTitle}</h1>
 </div>
 
 <div class="nav">
-    <a href="index.jsp">Home</a>
+    <a href="<c:url value='/'/>">Home</a>
     <a href="#">Lectures</a>
     <a href="#">Polls</a>
 </div>
@@ -186,13 +186,25 @@
             <c:forEach var="material" items="${materials}">
                 <li>
                     <a href="/downloadMaterial/${material.id}">${material.fileName}</a>
+
+                    <!-- Show delete if user is a teacher -->
+                    <c:if test="${user.role == 'TEACHER'}">
+                        <form method="post" action="deleteMaterial" style="display:inline;">
+                            <input type="hidden" name="lectureTitle" value="${lectureTitle}" />
+                            <input type="hidden" name="lectureId" value="${lectureId}" />
+                            <input type="hidden" name="materialId" value="${material.id}" />
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </c:if>
                 </li>
             </c:forEach>
+
         </ul>
     </c:if>
 
     <div class="course-material-form" id="course-material-form">
         <form method="post" action="addMaterial" enctype="multipart/form-data">
+            <input type="hidden" name="lectureTitle" value="${lectureTitle}" />
             <input type="hidden" name="lectureId" value="${lectureId}" />
             <input type="file" name="file" id="fileUpload" required />
             <button type="submit">Add Course Material</button>
@@ -200,7 +212,7 @@
 
     </div>
     <!-- If no download links, show a message -->
-    <c:if test="${empty downloadLinks}">
+    <c:if test="${empty materials}">
         <p>No download links available for this lecture.</p>
     </c:if>
 </div>
@@ -210,6 +222,7 @@
     <!-- Hidden comment input box -->
     <div class="comment-form" id="comment-form">
         <form method="post" action="submitComment">
+            <input type="hidden" name="lectureTitle" value="${lectureTitle}" />
             <input type="hidden" name="lectureId" value="${lectureId}" />
             <textarea name="comment" placeholder="Share your thoughts about this poll..."></textarea><br>
             <button type="submit">Post Comment</button>
@@ -219,25 +232,34 @@
     <h3>Previous Comments</h3>
     <!-- Display comments -->
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-    <div class="comment">
         <c:if test="${not empty comments}">
-            <ul class="comments">
-                <c:forEach var="comment" items="${comments}" varStatus="status">
-                    <div class="comment-header">
-                        <span class="role-student">${comment.username}</span>
+            <!-- Display comments with delete for owner -->
+            <c:forEach var="comment" items="${comments}" varStatus="status">
+                <div class="comment">
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <span class="role-student">${comment.username}</span>
+                        </div>
+                        <div class="comment-meta">${formattedTimestamps[status.index]}</div>
+                        <div class="comment-body">${comment.content}</div>
+                        <!-- Show delete button if current user is comment owner -->
+                        <c:if test="${user.name == comment.username}">
+                            <form method="post" action="deleteComment" style="display:inline;">
+                                <input type="hidden" name="lectureTitle" value="${lectureTitle}" />
+                                <input type="hidden" name="lectureId" value="${lectureId}" />
+                                <input type="hidden" name="commentId" value="${comment.id}" />
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </c:if>
                     </div>
-                    <!-- Accessing the corresponding timestamp for each comment using the index -->
-                    <div class="comment-meta">${formattedTimestamps[status.index]}</div>
-                    <li class="comment-body">${comment.content}</li>
-                </c:forEach>
-            </ul>
+                </div>
+            </c:forEach>
         </c:if>
 
 
         <c:if test="${empty comments}">
             <p>No comments for this lecture.</p>
         </c:if>
-    </div>
 </div>
 
 
