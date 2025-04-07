@@ -11,7 +11,6 @@ import s380f.gp.s380f.model.Lecture;
 import s380f.gp.s380f.model.User;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class CommentService {
@@ -35,12 +34,5 @@ public class CommentService {
         comment.setLecture(lecture);
 
         commentRepository.save(comment);
-    }
-
-
-    // Method to fetch download links for a specific lecture
-    public List<String> getCommentsForLecture(Long lectureId) {
-        String sql = "SELECT content FROM comment WHERE lecture_id = ?";
-        return jdbcTemplate.queryForList(sql, String.class, lectureId);
     }
 }

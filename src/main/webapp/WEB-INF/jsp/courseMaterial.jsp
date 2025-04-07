@@ -181,15 +181,24 @@
 <div class="section">
     <h2>lecture notes</h2>
     <!-- Display download links -->
-    <c:if test="${not empty downloadLinks}">
-        <h3>Download Links:</h3>
+    <c:if test="${not empty materials}">
         <ul class="download-links">
-            <c:forEach var="link" items="${downloadLinks}">
-                <li><a href="${link}" target="_blank">${link}</a></li>
+            <c:forEach var="material" items="${materials}">
+                <li>
+                    <a href="/downloadMaterial/${material.id}">${material.fileName}</a>
+                </li>
             </c:forEach>
         </ul>
     </c:if>
 
+    <div class="course-material-form" id="course-material-form">
+        <form method="post" action="addMaterial" enctype="multipart/form-data">
+            <input type="hidden" name="lectureId" value="${lectureId}" />
+            <input type="file" name="file" id="fileUpload" required />
+            <button type="submit">Add Course Material</button>
+        </form>
+
+    </div>
     <!-- If no download links, show a message -->
     <c:if test="${empty downloadLinks}">
         <p>No download links available for this lecture.</p>

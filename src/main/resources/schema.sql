@@ -34,3 +34,11 @@ CREATE TABLE IF NOT EXISTS comment (
     lecture_id BIGINT,
     FOREIGN KEY (lecture_id) REFERENCES lecture(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS course_material (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    file_name VARCHAR(255) NOT NULL,
+    file_type VARCHAR(100),
+    lecture_id BIGINT NOT NULL,
+    data LONGBLOB NOT NULL
+);

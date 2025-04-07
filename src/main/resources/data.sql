@@ -11,6 +11,7 @@ DELETE FROM lecture;
 -- Delete courses last
 DELETE FROM course;
 
+DELETE FROM course_material;
 
 INSERT INTO users (username, password, name, email, phone, role)
 VALUES
