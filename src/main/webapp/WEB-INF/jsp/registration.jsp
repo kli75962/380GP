@@ -183,22 +183,7 @@
             </div>
             
             <div class="form-group role-selector">
-                <label>I am a:</label>
-                <div class="role-options">
-                    <div class="role-option">
-                        <form:radiobutton path="role" value="student" id="student"/>
-                        <label for="student">Student</label>
-                    </div>
-                    <div class="role-option">
-                        <form:radiobutton path="role" value="teacher" id="teacher"/>
-                        <label for="teacher">Teacher</label>
-                    </div>
-                    <div class="role-option">
-                        <form:radiobutton path="role" value="admin" id="admin"/>
-                        <label for="admin">Admin</label>
-                    </div>
-                </div>
-                <form:errors path="role" cssClass="error"/>
+                <form:hidden path="role" value="student"/>
             </div>
             
             <button type="submit" class="register-btn">Create Account</button>

@@ -322,10 +322,7 @@
                 </div>
                 <div class="form-group">
                     <label for="newRole">Role</label>
-                    <select id="newRole" name="role" required>
-                        <option value="STUDENT">Student</option>
-                        <option value="ADMIN">Admin</option>
-                    </select>
+                    <input type="text" id="newRole" name="role" value="STUDENT" readonly>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" onclick="closeModal('addUserModal')">Cancel</button>
@@ -358,10 +355,7 @@
                 </div>
                 <div class="form-group">
                     <label for="editRole">Role</label>
-                    <select id="editRole" name="role" required>
-                        <option value="STUDENT">Student</option>
-                        <option value="ADMIN">Admin</option>
-                    </select>
+                    <input type="text" id="editRole" name="role" value="STUDENT" readonly>
                 </div>
                 <div class="form-group">
                     <label>

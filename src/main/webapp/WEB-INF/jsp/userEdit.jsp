@@ -159,6 +159,7 @@
             <div class="form-group">
                 <label for="password">New Password (leave blank to keep current)</label>
                 <input type="password" id="password" name="password">
+
             </div>
 
             <div class="form-group">
@@ -167,8 +168,19 @@
             </div>
 
             <button type="submit" class="btn">Save Changes</button>
-            <button type="button" class="btn btn-danger" style="float: right;">Delete Account</button>
         </form>
     </div>
+
+     <script>
+        function togglePasswordVisibility(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        }
+        
+    </script>
 </body>
 </html>

@@ -162,7 +162,6 @@
                         <div class="lecture-title">${lecture.title}</div>
                     </a>
 
-                    <!-- Show delete button only if user is a teacher -->
                     <c:if test="${user.role eq 'TEACHER'}">
                         <form action="<c:url value='/deleteLecture'/>" method="post" style="display:inline;">
                             <input type="hidden" name="lectureId" value="${lecture.id}" />
@@ -178,15 +177,43 @@
 
     <div class="section">
         <h2>Current Polls</h2>
+
+        <c:if test="${user.role eq 'TEACHER'}">
+            <button onclick="togglePollInput()">Add New Poll</button>
+            <form id="pollForm" action="<c:url value='/polls/add'/>" method="post" style="display: none; margin-top: 5px;">
+                <div class="form-group">
+                    <input type="text" name="question" placeholder="Enter poll question" required style="width: 100%; margin-bottom: 10px;"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="option1" placeholder="Option 1" required style="width: 100%; margin-bottom: 5px;"/>
+                    <input type="text" name="option2" placeholder="Option 2" required style="width: 100%; margin-bottom: 5px;"/>
+                    <input type="text" name="option3" placeholder="Option 3" required style="width: 100%; margin-bottom: 5px;"/>
+                    <input type="text" name="option4" placeholder="Option 4" required style="width: 100%; margin-bottom: 10px;"/>
+                </div>
+                <div class="form-group">
+                    <label for="endDate">End Date:</label>
+                    <input type="datetime-local" name="endDate" id="endDate" required style="width: 100%; margin-bottom: 10px;"/>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </c:if>
+
         <ul class="poll-list">
-            <li class="poll-item" onclick="window.location.href='poll.jsp'">
-                <div class="poll-question">Which date do you prefer for the mid-term test?</div>
-                <div class="poll-status">Voting open until April 7, 2025</div>
-            </li>
-            <li class="poll-item">
-                <div class="poll-question">Which topic would you like more practice with?</div>
-                <div class="poll-status">Voting open until April 14, 2025</div>
-            </li>
+            <c:forEach var="poll" items="${polls}">
+                <li class="poll-item">
+                    <a href="<c:url value='/polls/${poll.id}'/>">
+                        <div class="poll-question">${poll.question}</div>
+                        <div class="poll-status">Voting open until: ${poll.endDate}</div>
+                    </a>
+
+                    <c:if test="${user.role eq 'TEACHER'}">
+                        <form action="<c:url value='/polls/delete'/>" method="post" style="display:inline;">
+                            <input type="hidden" name="pollId" value="${poll.id}" />
+                            <button type="submit" style="margin-left: 10px; color: red;">Delete</button>
+                        </form>
+                    </c:if>
+                </li>
+            </c:forEach>
         </ul>
     </div>
 </body>
@@ -195,6 +222,12 @@
         const form = document.getElementById('lectureForm');
         form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
     }
+
+    function togglePollInput() {
+        const form = document.getElementById('pollForm');
+        form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+    }
+    
 </script>
 
 </html>

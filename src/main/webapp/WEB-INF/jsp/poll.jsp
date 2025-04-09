@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,15 +63,27 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        .poll-option:hover {
-            background-color: #e1f0fa;
-            border-color: #3498db;
-        }
-        .poll-option.selected {
-            background-color: #e1f0fa;
-            border-left: 4px solid #3498db;
-            font-weight: 600;
-        }
+            .poll-option {
+                display: block;
+                margin: 15px 0;
+                padding: 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                background-color: #f8f9fa;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+
+            .poll-option:hover {
+                background-color: #e1f0fa;
+                border-color: #3498db;
+            }
+
+            .poll-option.selected {
+                background-color: #e1f0fa;
+                border-left: 4px solid #3498db;
+                font-weight: 600;
+            }
         .vote-count {
             font-size: 0.9em;
             color: #7f8c8d;
@@ -148,38 +161,26 @@
     </div>
 
     <div class="nav">
-        <a href="index.jsp">Home</a>
-        <a href="index.jsp">Lectures</a>
-        <a href="poll.jsp">Polls</a>
+        <a href="<c:url value='/'/>">Home</a>
+        <a href="<c:url value='/courseMaterials'/>">Course Materials</a>
+        <a href="<c:url value='/polls'/>">Polls</a>
     </div>
 
     <div class="poll-container">
-        <div class="poll-question">Which date do you prefer for the mid-term test?</div>
+        <div class="poll-question">${poll.question}</div>
         
-        <form>
-            <label class="poll-option">
-                <input type="radio" name="pollOption" value="1"> April 10, 2025 (Friday)
-                <div class="vote-count">15 votes (30%)</div>
-            </label>
-            
-            <label class="poll-option selected">
-                <input type="radio" name="pollOption" value="2" checked> April 14, 2025 (Monday)
-                <div class="vote-count">25 votes (50%)</div>
-            </label>
-            
-            <label class="poll-option">
-                <input type="radio" name="pollOption" value="3"> April 17, 2025 (Thursday)
-                <div class="vote-count">8 votes (16%)</div>
-            </label>
-            
-            <label class="poll-option">
-                <input type="radio" name="pollOption" value="4"> April 21, 2025 (Monday)
-                <div class="vote-count">2 votes (4%)</div>
-            </label>
-            
+        <form action="<c:url value='/polls/vote'/>" method="post">
+            <input type="hidden" name="pollId" value="${poll.id}" />
+            <c:forEach var="entry" items="${poll.options}">
+                <div class="poll-option ${userVoteOptionId eq entry.key ? 'selected' : ''}">
+                    <input type="radio" name="optionId" value="${entry.key}" id="option${entry.key}" 
+                           ${userVoteOptionId eq entry.key ? 'checked' : ''} required>
+                    <label for="option${entry.key}">${entry.value.optionText}</label>
+                    <div class="vote-count">${entry.value.voteCount} votes</div>
+                </div>
+            </c:forEach>
             <div class="poll-actions">
-                <button type="submit">Submit Vote</button>
-                <button type="button">Change Vote</button>
+                <button type="submit">${userVoteOptionId != null ? 'Change Vote' : 'Submit Vote'}</button>
             </div>
         </form>
     </div>
@@ -187,35 +188,66 @@
     <div class="comment-section">
         <h2>Discussion</h2>
         
-        <div class="comment-form">
-            <h3>Post a Comment</h3>
-            <textarea placeholder="Share your thoughts about this poll..."></textarea>
-            <div>
-                <button type="submit">Post Comment</button>
+        <c:if test="${not empty user}">
+            <div class="comment-form">
+                <h3>Post a Comment</h3>
+                <form action="<c:url value='/polls/PollComment'/>" method="post">
+                    <input type="hidden" name="pollId" value="${poll.id}">
+                    <textarea name="comment" placeholder="Share your thoughts about this poll..."></textarea>
+                    <div>
+                        <button type="submit">Post Comment</button>
+                    </div>
+                </form>
             </div>
-        </div>
+        </c:if>
 
         <h3>Previous Comments</h3>
         
-        <div class="comment">
-            <div class="comment-header">
-                <span class="role-teacher">Prof. Johnson (Instructor)</span>
-            </div>
-            <div class="comment-meta">Posted on March 15, 2025</div>
-            <div class="comment-body">
-                "Please vote for your preferred date. The test will be 2 hours long and cover all material up to lecture 8."
-            </div>
-        </div>
-
-        <div class="comment">
-            <div class="comment-header">
-                <span class="role-student">Sarah M. (Student)</span>
-            </div>
-            <div class="comment-meta">Posted on March 18, 2025</div>
-            <div class="comment-body">
-                "I prefer Monday dates as it gives us the weekend to prepare. What does everyone else think?"
-            </div>
+        <div class="comments-section">
+            <h3>Comments</h3>
+            <c:forEach var="comment" items="${poll.comments}">
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-user role-${comment.userRole.toLowerCase()}">
+                            ${comment.userName} (${comment.userRole})
+                        </span>
+                        <br>
+                        <span class="comment-meta" data-timestamp="${comment.timestamp}"></span>
+                    </div>
+                    <div class="comment-body">${comment.content}</div>
+                </div>
+            </c:forEach>
         </div>
     </div>
 </body>
 </html>
+
+<script>
+    function formatDateTime(dateStr) {
+        const date = new Date(dateStr);
+        const options = { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        };
+        return date.toLocaleString(undefined, options);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.comment-meta').forEach(el => {
+            const timestamp = el.getAttribute('data-timestamp');
+            if (timestamp) {
+                el.textContent = formatDateTime(timestamp);
+            }
+        });
+    });
+
+    document.querySelectorAll('.poll-option').forEach(option => {
+        option.addEventListener('click', function() {
+            document.querySelectorAll('.poll-option').forEach(o => o.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+</script>
