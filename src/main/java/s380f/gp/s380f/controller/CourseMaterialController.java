@@ -92,12 +92,7 @@ public class CourseMaterialController {
     @PostMapping("/deleteComment")
     public String deleteComment(@RequestParam("lectureTitle") String title, @RequestParam("lectureId") Long lectureId, @RequestParam Long commentId, HttpSession session) {
 
-        User user = (User) session.getAttribute("user");
-        String username = user.getName();
-        Comment comment = commentService.getCommentById(commentId);
-        if (comment.getUsername().equals(username)) {
-            commentService.deleteComment(commentId);
-        }
+        commentService.deleteComment(commentId);
         return "redirect:/courseMaterial?title=" + title + "&id=" + lectureId; // adjust if needed
     }
 

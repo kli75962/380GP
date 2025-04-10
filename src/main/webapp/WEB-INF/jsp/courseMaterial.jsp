@@ -243,7 +243,7 @@
                         <div class="comment-meta">${formattedTimestamps[status.index]}</div>
                         <div class="comment-body">${comment.content}</div>
                         <!-- Show delete button if current user is comment owner -->
-                        <c:if test="${user.name == comment.username}">
+                        <c:if test="${user.role eq 'TEACHER'}">
                             <form method="post" action="deleteComment" style="display:inline;">
                                 <input type="hidden" name="lectureTitle" value="${lectureTitle}" />
                                 <input type="hidden" name="lectureId" value="${lectureId}" />
