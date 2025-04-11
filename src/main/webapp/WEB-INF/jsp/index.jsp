@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -122,36 +124,43 @@
     </div>
 
     <div class="header">
-        <h1>Web Applications: Design and Development</h1>
+        <h1><spring:message code="title" /></h1>
         <div class="course-code">COMP 3820SEF / S380F / S380W</div>
     </div>
 
     <div class="nav">
-        <a href="<c:url value='/'/>" class="nav-link">Home</a>
-        <a href="<c:url value='/courseMaterials'/>" class="nav-link">Course Materials</a>
-        <a href="<c:url value='/polls'/>" class="nav-link">Polls</a>
+        <a href="<c:url value='/'/>" class="nav-link"><spring:message code="index.homepage" /></a>
+        <a href="<c:url value='/courseMaterials'/>" class="nav-link"><spring:message code="index.courseMaterial" /></a>
+        <a href="<c:url value='/polls'/>" class="nav-link"><spring:message code="index.polls" /></a>
         
         <c:if test="${not empty user && user.role eq 'TEACHER'}">
             <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
         </c:if>
         
         <c:if test="${empty user}">
-            <a href="<c:url value='/login'/>" class="nav-link">Login</a>
-            <a href="<c:url value='/register'/>" class="nav-link">Register</a>
+             <a href="<c:url value='/login'/>" class="nav-link"><spring:message code="index.login" /></a>
+            <a href="<c:url value='/register'/>" class="nav-link"><spring:message code="index.register" /></a>
         </c:if>
         <c:if test="${not empty user}">
-            <a href="<c:url value='/logout'/>" class="nav-link">Logout</a>
+           <a href="<c:url value='/logout'/>" class="nav-link"><spring:message code="index.logout" /></a>
         </c:if>
+        //for choosing eng or 繁中
+        <row style="right: 0">
+            <a> <spring:message code="index.language" /> : </a>
+            <a href="?lang=en"> Eng</a>
+            <a href="?lang=zh_HK"> 繁中</a>
+        </row>
+
     </div>
 
     <div class="section">
-        <h2>Lectures</h2>
+       <h2><spring:message code="index.lectures" /></h2>
 
         <c:if test="${user.role eq 'TEACHER'}">
-            <button onclick="toggleLectureInput()">Add New</button>
+            <button onclick="toggleLectureInput()"><spring:message code="addNew" /></button>
             <form id="lectureForm" action="<c:url value='/addLecture'/>" method="post" style="display: none; margin-top: 5px;">
                 <input type="text" name="title" placeholder="Enter lecture title" required />
-                <button type="submit">Submit</button>
+                <button type="submit" style="margin-left: 10px; color: red;"><spring:message code="delete" /></button>
             </form>
         </c:if>
 
@@ -176,10 +185,10 @@
 
 
     <div class="section">
-        <h2>Current Polls</h2>
+        <h2><spring:message code="index.currentPools" /></h2>
 
         <c:if test="${user.role eq 'TEACHER'}">
-            <button onclick="togglePollInput()">Add New Poll</button>
+            <button onclick="togglePollInput()"><spring:message code="addNew" /></button>
             <form id="pollForm" action="<c:url value='/polls/add'/>" method="post" style="display: none; margin-top: 5px;">
                 <div class="form-group">
                     <input type="text" name="question" placeholder="Enter poll question" required style="width: 100%; margin-bottom: 10px;"/>
@@ -191,10 +200,10 @@
                     <input type="text" name="option4" placeholder="Option 4" required style="width: 100%; margin-bottom: 10px;"/>
                 </div>
                 <div class="form-group">
-                    <label for="endDate">End Date:</label>
+                    <label for="endDate"><spring:message code="endDate" />:</label>
                     <input type="datetime-local" name="endDate" id="endDate" required style="width: 100%; margin-bottom: 10px;"/>
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit"><spring:message code="submit" /></button>
             </form>
         </c:if>
 
@@ -203,13 +212,13 @@
                 <li class="poll-item">
                     <a href="<c:url value='/polls/${poll.id}'/>">
                         <div class="poll-question">${poll.question}</div>
-                        <div class="poll-status">Voting open until: ${poll.endDate}</div>
+                       <div class="poll-status"><spring:message code="index.voteUntil" />: ${poll.endDate}</div>
                     </a>
 
                     <c:if test="${user.role eq 'TEACHER'}">
                         <form action="<c:url value='/polls/delete'/>" method="post" style="display:inline;">
                             <input type="hidden" name="pollId" value="${poll.id}" />
-                            <button type="submit" style="margin-left: 10px; color: red;">Delete</button>
+                             <button type="submit" style="margin-left: 10px; color: red;"><spring:message code="delete" /></button>
                         </form>
                     </c:if>
                 </li>
