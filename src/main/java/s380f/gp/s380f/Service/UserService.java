@@ -52,6 +52,14 @@ public class UserService {
                 return userOpt.get();
         }
 
+        public User getUserByUsername(String username) {
+                Optional<User> userOpt = userRepository.findByUsername(username);
+                if (userOpt.isEmpty()) {
+                        throw new RuntimeException("User not found");
+                }
+                return userOpt.get();
+        }
+
         public void updateUserProfile(String id, String name, String email, String phone,
                         String password, String confirmPassword) {
                 User user = getUserById(id);

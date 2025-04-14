@@ -1,16 +1,16 @@
 package s380f.gp.s380f.Service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import s380f.gp.s380f.Repository.PollRepository;
 import s380f.gp.s380f.Repository.UserPollVoteRepository;
+import s380f.gp.s380f.Repository.PollCommentRepository;
 import s380f.gp.s380f.model.Poll;
 import s380f.gp.s380f.model.PollOption;
 import s380f.gp.s380f.model.UserPollVote;
 import s380f.gp.s380f.model.PollComment;
 import s380f.gp.s380f.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
@@ -26,11 +26,14 @@ public class PollService {
   private UserPollVoteRepository userPollVoteRepository;
 
   @Autowired
+  private PollCommentRepository pollCommentRepository;
+
+  @Autowired
   private UserService userService;
 
   @Transactional
   public Poll createPoll(String question, String option1, String option2, String option3, String option4,
-      String endDate) {
+                         String endDate) {
     Poll poll = new Poll();
     poll.setQuestion(question);
     poll.setEndDate(LocalDateTime.parse(endDate));
@@ -90,7 +93,6 @@ public class PollService {
 
     UserPollVote existingVote = userPollVoteRepository.findByPollIdAndUserId(pollId, userId);
     if (existingVote != null) {
-
       PollOption oldOption = existingVote.getOption();
       oldOption.setVoteCount(oldOption.getVoteCount() - 1);
       existingVote.setOption(selectedOption);
@@ -133,5 +135,14 @@ public class PollService {
   public String getUserName(Long userId) {
     User user = userService.getUserById(String.valueOf(userId));
     return user.getUsername();
+  }
+
+  // New methods for history
+  public List<UserPollVote> getUserVotingHistory(Long userId) {
+    return userPollVoteRepository.findByUserIdOrderByVotedAtDesc(userId);
+  }
+
+  public List<PollComment> getUserPollCommentHistory(Long userId) {
+    return pollCommentRepository.findByUserIdOrderByTimestampDesc(userId);
   }
 }

@@ -9,8 +9,8 @@ import s380f.gp.s380f.Repository.LectureRepository;
 import s380f.gp.s380f.model.Comment;
 import s380f.gp.s380f.model.Lecture;
 import s380f.gp.s380f.model.User;
-
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -43,5 +43,9 @@ public class CommentService {
     public Comment getCommentById(Long commentId) {
         return commentRepository.findById(commentId)
                 .orElseThrow(() -> new RuntimeException("Comment not found"));
+    }
+
+    public List<Comment> getUserLectureCommentHistory(String username) {
+        return commentRepository.findByUsernameOrderByTimestampDesc(username);
     }
 }
