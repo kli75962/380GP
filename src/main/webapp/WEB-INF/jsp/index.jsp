@@ -130,6 +130,14 @@
         <a href="<c:url value='/'/>" class="nav-link">Home</a>
         <a href="<c:url value='/courseMaterials'/>" class="nav-link">Course Materials</a>
         <a href="<c:url value='/polls'/>" class="nav-link">Polls</a>
+
+        <c:if test="${not empty user}">
+            <a href="<c:url value='/commenthistory'/>" class="nav-link">Comments History</a>
+        </c:if>
+
+        <c:if test="${not empty user}">
+            <a href="<c:url value='/votinghistory'/>" class="nav-link">Polls History</a>
+        </c:if>
         
         <c:if test="${not empty user && user.role eq 'TEACHER'}">
             <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
