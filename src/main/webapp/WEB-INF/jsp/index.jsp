@@ -118,7 +118,7 @@
                 <spring:message code="welcome"/>, <a href="<c:url value='/userEdit'/>" class="username-link">${user.username}</a> | <a href="<c:url value='/logout'/>"><spring:message code="index.logout" /></a>
             </c:when>
             <c:otherwise>
-                <a href="<c:url value='/login'/>"><spring:message code="signin" /></a> | <a href="<c:url value='/register'/>"><spring:message code="index.register" /></a>
+                <a href="<c:url value='/login'/>"><spring:message code="signIn" /></a> | <a href="<c:url value='/register'/>"><spring:message code="index.register" /></a>
             </c:otherwise>
         </c:choose>
     </div>
