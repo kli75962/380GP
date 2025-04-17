@@ -1,11 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Course Portal</title>
+    <title><spring:message code="register.title"/></title>
     <style>
         .nav {
             display: flex;
@@ -140,44 +141,44 @@
 </head>
 <body>
     <div class="nav">
-        <a href="<c:url value='/'/>">Home</a>
-        <a href="<c:url value='/login'/>">Sign In</a>
+        <a href="<c:url value='/'/>"><spring:message code="index.homepage"/></a>
+        <a href="<c:url value='/login'/>"><spring:message code="signin"/></a>
     </div>
 
     <div class="register-container">
-        <h1>Create Your Account</h1>
+        <h1><spring:message code="register.create" text="Create Your Account"/>t</h1>
         
         <%--@elvariable id="user" type=""--%>
         <form:form action="${pageContext.request.contextPath}/register" method="post" modelAttribute="user">
             <div class="form-group">
-                <form:label path="username">Username</form:label>
+                <form:label path="username"><spring:message code="register.username"/></form:label>
                 <form:input path="username" type="text" placeholder="keithlee123"/>
                 <form:errors path="username" cssClass="error"/>
             </div>
             
             <div class="form-group">
-                <form:label path="name">Full Name</form:label>
+                <form:label path="name"><spring:message code="register.fullName"/></form:label>
                 <form:input path="name" type="text" placeholder="Keith Lee"/>
                 <form:errors path="name" cssClass="error"/>
             </div>
             
             <div class="form-group">
-                <form:label path="email">Email Address</form:label>
+                <form:label path="email"><spring:message code="register.email"/></form:label>
                 <form:input path="email" type="email" placeholder="keithlee@live.hkmu.edu.hk"/>
                 <form:errors path="email" cssClass="error"/>
             </div>
             
             <div class="form-group">
-                <form:label path="phoneNumber">Phone Number</form:label>
+                <form:label path="phoneNumber"><spring:message code="register.phone"/></form:label>
                 <form:input path="phoneNumber" type="tel" placeholder="27112100"/>
                 <form:errors path="phoneNumber" cssClass="error"/>
             </div>
             
             <div class="form-group">
-                <form:label path="password">Password</form:label>
+                <form:label path="password"><spring:message code="password"/></form:label>
                 <form:password path="password" placeholder="********"/>
                 <div class="password-requirements">
-                    Must be at least 8 characters with one number and one special character
+                    <spring:message code="register.requirment"/>
                 </div>
                 <form:errors path="password" cssClass="error"/>
             </div>
@@ -186,10 +187,10 @@
                 <form:hidden path="role" value="student"/>
             </div>
             
-            <button type="submit" class="register-btn">Create Account</button>
+            <button type="submit" class="register-btn"><spring:message code="createAccount"/></button>
             
             <div class="login-link">
-                Already have an account? <a href="<c:url value='/login'/>">Sign in here</a>
+                <spring:message code="register.message"/><a href="<c:url value='/login'/>"><spring:message code="register.signinHere"/>/a>
             </div>
         </form:form>
     </div>

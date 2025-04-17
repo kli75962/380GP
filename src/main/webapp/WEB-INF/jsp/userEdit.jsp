@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -113,12 +114,12 @@
 </head>
 <body>
     <div class="header">
-        <h1>Edit Your Profile</h1>
+        <h1> <spring:message code="edit.title"/></h1>
     </div>
 
     <div class="nav">
-        <a href="index.jsp">Home</a>
-        <a href="userHistory.jsp">My History</a>
+        <a href="index.jsp"> <spring:message code="index.homepage"/></a>
+        <a href="userHistory.jsp"><spring:message code="edit.history"/></a>
     </div>
 
     <div class="profile-container">
@@ -137,37 +138,37 @@
         <form action="/updateProfile" method="post">
             <div class="form-row">
                 <div class="form-group">
-                    <label for="firstName">First Name</label>
+                    <label for="firstName"><spring:message code="firstName"/></label>
                     <input type="text" id="firstName" name="firstName" value="${user.name.split(' ')[0]}" required>
                 </div>
                 <div class="form-group">
-                    <label for="lastName">Last Name</label>
+                    <label for="lastName"><spring:message code="lastName"/></label>
                     <input type="text" id="lastName" name="lastName" value="${user.name.split(' ')[1]}" required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email"><spring:message code="register.email"/></label>
                 <input type="email" id="email" name="email" value="${user.email}" required>
             </div>
 
             <div class="form-group">
-                <label for="phone">Phone Number</label>
+                <label for="phone"><spring:message code="register.phone"/></label>
                 <input type="tel" id="phone" name="phone" value="${user.phoneNumber}">
             </div>
 
             <div class="form-group">
-                <label for="password">New Password (leave blank to keep current)</label>
+                <label for="password"><spring:message code="newPassword"/> </label>
                 <input type="password" id="password" name="password">
 
             </div>
 
             <div class="form-group">
-                <label for="confirmPassword">Confirm New Password</label>
+                <label for="confirmPassword"><spring:message code="confirm"/></label>
                 <input type="password" id="confirmPassword" name="confirmPassword">
             </div>
 
-            <button type="submit" class="btn">Save Changes</button>
+            <button type="submit" class="btn"><spring:message code="save"/></button>
         </form>
     </div>
 

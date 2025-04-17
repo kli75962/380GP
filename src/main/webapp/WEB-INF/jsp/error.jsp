@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,11 +44,11 @@
 </head>
 <body>
     <div class="error-container">
-        <h1>Oops! Something went wrong</h1>
+        <h1> <spring:message code="error.message"/></h1>
         <div class="error-message">
             ${error}
         </div>
-        <a href="<c:url value='/'/>" class="back-link">Return to Home Page</a>
+        <a href="<c:url value='/'/>" class="back-link"> <spring:message code="error.back"/></a>
     </div>
 </body>
 </html>

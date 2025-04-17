@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -157,13 +158,13 @@
 </head>
 <body>
     <div class="header">
-        <h1>Web Applications: Design and Development</h1>
+        <h1><spring:message code="title" /></h1>
     </div>
 
     <div class="nav">
-        <a href="<c:url value='/'/>">Home</a>
-        <a href="<c:url value='/courseMaterials'/>">Course Materials</a>
-        <a href="<c:url value='/polls'/>">Polls</a>
+        <a href="<c:url value='/'/>"><spring:message code="index.homepage" /></a>
+        <a href="<c:url value='/courseMaterials'/>"><spring:message code="index.courseMaterial" /></a>
+        <a href="<c:url value='/polls'/>"><spring:message code="index.polls" /></a>
     </div>
 
     <div class="poll-container">
@@ -176,35 +177,43 @@
                     <input type="radio" name="optionId" value="${entry.key}" id="option${entry.key}" 
                            ${userVoteOptionId eq entry.key ? 'checked' : ''} required>
                     <label for="option${entry.key}">${entry.value.optionText}</label>
-                    <div class="vote-count">${entry.value.voteCount} votes</div>
+                    <div class="vote-count">${entry.value.voteCount} <spring:message code="vote" text="votes"/></div>
                 </div>
             </c:forEach>
             <div class="poll-actions">
-                <button type="submit">${userVoteOptionId != null ? 'Change Vote' : 'Submit Vote'}</button>
+                <button type="submit">
+                    <c:choose>
+                        <c:when test="${userVoteOptionId != null}">
+                            <spring:message code="poll.changeVote" text="Change Vote"/>
+                        </c:when>
+                        <c:otherwise>
+                            <spring:message code="poll.submitVote" text="Submit Vote"/>
+                        </c:otherwise>
+                    </c:choose>
+                </button>
             </div>
         </form>
     </div>
 
     <div class="comment-section">
-        <h2>Discussion</h2>
+        <h2><spring:message code="material.discussion" text="Discussion"/></h2>
         
         <c:if test="${not empty user}">
             <div class="comment-form">
-                <h3>Post a Comment</h3>
+                <h3><spring:message code="material.discussion" text="Discussion"/></h3>
                 <form action="<c:url value='/polls/PollComment'/>" method="post">
                     <input type="hidden" name="pollId" value="${poll.id}">
                     <textarea name="comment" placeholder="Share your thoughts about this poll..."></textarea>
                     <div>
-                        <button type="submit">Post Comment</button>
+                        <button type="submit"><spring:message code="submit" text="Post Comment"/></button>
                     </div>
                 </form>
             </div>
         </c:if>
 
-        <h3>Previous Comments</h3>
+        <h3><spring:message code="material.previous" text="Previous Comments"/></h3>
         
         <div class="comments-section">
-            <h3>Comments</h3>
             <c:forEach var="comment" items="${poll.comments}">
                 <div class="comment">
                     <div class="comment-header">
