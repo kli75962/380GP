@@ -142,7 +142,7 @@
 <body>
     <div class="nav">
         <a href="<c:url value='/'/>"><spring:message code="index.homepage"/></a>
-        <a href="<c:url value='/login'/>"><spring:message code="signin"/></a>
+        <a href="<c:url value='/login'/>"><spring:message code="signIn"/></a>
     </div>
 
     <div class="register-container">
