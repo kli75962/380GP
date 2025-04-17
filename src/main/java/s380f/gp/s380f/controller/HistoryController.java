@@ -1,10 +1,10 @@
 package s380f.gp.s380f.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.servlet.http.HttpSession;
 import s380f.gp.s380f.Service.PollService;
 import s380f.gp.s380f.Service.CommentService;
 import s380f.gp.s380f.Service.UserService;
@@ -27,22 +27,26 @@ public class HistoryController {
     private UserService userService;
 
     @GetMapping("/votinghistory")
-    public String getVotingHistory(Authentication authentication, Model model) {
-        String username = authentication.getName();
-        User user = userService.getUserByUsername(username);
+    public String getVotingHistory(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
         List<UserPollVote> votes = pollService.getUserVotingHistory(user.getId());
         model.addAttribute("votes", votes);
-        return "voting_history";
+        return "votinghistory";
     }
 
     @GetMapping("/commenthistory")
-    public String getCommentHistory(Authentication authentication, Model model) {
-        String username = authentication.getName();
-        User user = userService.getUserByUsername(username);
+    public String getCommentHistory(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
         List<PollComment> pollComments = pollService.getUserPollCommentHistory(user.getId());
-        List<Comment> lectureComments = commentService.getUserLectureCommentHistory(username);
+        List<Comment> lectureComments = commentService.getUserLectureCommentHistory(user.getName());
         model.addAttribute("pollComments", pollComments);
         model.addAttribute("lectureComments", lectureComments);
-        return "comment_history";
+        return "commenthistory";
     }
 }

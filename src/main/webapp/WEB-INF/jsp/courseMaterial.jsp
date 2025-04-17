@@ -251,7 +251,7 @@
                                 <input type="hidden" name="lectureTitle" value="${lectureTitle}" />
                                 <input type="hidden" name="lectureId" value="${lectureId}" />
                                 <input type="hidden" name="commentId" value="${comment.id}" />
-                               <button type="submit" class="delete-btn"><spring:message code="delete"/></button>
+                               <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this comment?')"><spring:message code="delete"/></button>
                             </form>
                         </c:if>
                     </div>

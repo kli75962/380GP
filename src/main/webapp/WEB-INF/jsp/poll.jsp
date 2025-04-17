@@ -177,7 +177,7 @@
                     <input type="radio" name="optionId" value="${entry.key}" id="option${entry.key}" 
                            ${userVoteOptionId eq entry.key ? 'checked' : ''} required>
                     <label for="option${entry.key}">${entry.value.optionText}</label>
-                    <div class="vote-count">${entry.value.voteCount} <spring:message code="vote" text="votes"/></div>
+                    <div class="vote-count"><spring:message code="vote" text="votes"/>: ${entry.value.voteCount} </div>
                 </div>
             </c:forEach>
             <div class="poll-actions">
@@ -212,21 +212,34 @@
         </c:if>
 
         <h3><spring:message code="material.previous" text="Previous Comments"/></h3>
-        
+
         <div class="comments-section">
-            <c:forEach var="comment" items="${poll.comments}">
-                <div class="comment">
-                    <div class="comment-header">
-                        <span class="comment-user role-${comment.userRole.toLowerCase()}">
-                            ${comment.userName} (${comment.userRole})
-                        </span>
-                        <br>
-                        <span class="comment-meta" data-timestamp="${comment.timestamp}"></span>
+    <h3><spring:message code="material.previous" text="Previous Comments"/></h3>
+            <c:forEach var="comment" items="${poll.comments}" varStatus="status">
+                <c:if test="${status.index % 5 == 0}">
+                    <div class="comment">
+                        <div class="comment-header">
+                    <span class="comment-user role-${comment.userRole.toLowerCase()}">
+                        ${comment.userName} (${comment.userRole})
+                    </span>
+                            <br>
+                            <span class="comment-meta" data-timestamp="${comment.timestamp}"></span>
+                        </div>
+                        <div class="comment-body">${comment.content}</div>
+                        <c:if test="${user.role eq 'TEACHER'}">
+                            <form method="post" action="deletePollComment" style="display:inline;">
+                                <input type="hidden" name="commentId" value="${comment.id}">
+                                <input type="hidden" name="pollId" value="${poll.id}">
+                                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this comment?')">
+                                    <spring:message code="delete"/>
+                                </button>
+                            </form>
+                        </c:if>
                     </div>
-                    <div class="comment-body">${comment.content}</div>
-                </div>
+                </c:if>
             </c:forEach>
         </div>
+
     </div>
 </body>
 </html>

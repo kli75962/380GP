@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import s380f.gp.s380f.Repository.PollRepository;
 import s380f.gp.s380f.Repository.UserPollVoteRepository;
 import s380f.gp.s380f.Repository.PollCommentRepository;
+import s380f.gp.s380f.Repository.UserRepository;
 import s380f.gp.s380f.model.Poll;
 import s380f.gp.s380f.model.PollOption;
 import s380f.gp.s380f.model.UserPollVote;
@@ -29,11 +30,14 @@ public class PollService {
   private PollCommentRepository pollCommentRepository;
 
   @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
   private UserService userService;
 
   @Transactional
   public Poll createPoll(String question, String option1, String option2, String option3, String option4,
-                         String endDate) {
+      String endDate) {
     Poll poll = new Poll();
     poll.setQuestion(question);
     poll.setEndDate(LocalDateTime.parse(endDate));
@@ -144,5 +148,13 @@ public class PollService {
 
   public List<PollComment> getUserPollCommentHistory(Long userId) {
     return pollCommentRepository.findByUserIdOrderByTimestampDesc(userId);
+  }
+
+  @Transactional
+  public void deletePollComment(Long commentId, Long userId) {
+    PollComment comment = pollCommentRepository.findById(commentId)
+        .orElseThrow(() -> new RuntimeException("Comment does not exist"));
+
+    pollCommentRepository.delete(comment);
   }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -86,6 +87,26 @@ public class PollController {
       return "redirect:/login";
     }
     pollService.addComment(pollId, user.getId(), comment);
+    return "redirect:/polls/" + pollId;
+  }
+
+  @PostMapping("/deletePollComment")
+  public String deleteComment(@RequestParam("commentId") Long commentId,
+      @RequestParam("pollId") Long pollId,
+      HttpSession session,
+      RedirectAttributes redirectAttributes) {
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+      return "redirect:/login";
+    }
+
+    try {
+      pollService.deletePollComment(commentId, user.getId());
+      redirectAttributes.addFlashAttribute("successMessage", "Comment successfully deleted");
+    } catch (Exception e) {
+      redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+    }
+
     return "redirect:/polls/" + pollId;
   }
 }

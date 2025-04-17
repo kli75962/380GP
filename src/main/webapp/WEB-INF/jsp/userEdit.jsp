@@ -119,7 +119,7 @@
 
     <div class="nav">
         <a href="index.jsp"> <spring:message code="index.homepage"/></a>
-        <a href="userHistory.jsp"><spring:message code="edit.history"/></a>
+
     </div>
 
     <div class="profile-container">
@@ -160,12 +160,14 @@
             <div class="form-group">
                 <label for="password"><spring:message code="newPassword"/> </label>
                 <input type="password" id="password" name="password">
+                <span class="password-toggle" onclick="togglePasswordVisibility('password')">👁️</span>
 
             </div>
 
             <div class="form-group">
                 <label for="confirmPassword"><spring:message code="confirm"/></label>
                 <input type="password" id="confirmPassword" name="confirmPassword">
+                <span class="password-toggle" onclick="togglePasswordVisibility('confirmPassword')">👁️</span>
             </div>
 
             <button type="submit" class="btn"><spring:message code="save"/></button>

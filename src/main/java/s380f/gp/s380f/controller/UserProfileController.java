@@ -55,7 +55,7 @@ public class UserProfileController {
       User updatedUser = userService.getUserById(String.valueOf(user.getId()));
       session.setAttribute("user", updatedUser);
 
-      redirectAttributes.addFlashAttribute("successMessage", "个人资料已更新");
+      redirectAttributes.addFlashAttribute("successMessage", "Profile updated");
     } catch (Exception e) {
       redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
     }
