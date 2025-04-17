@@ -199,7 +199,7 @@
                     <input type="password" id="password" name="password" required placeholder="Enter your password">
                 </div>
 
-                <button type="submit" class="login-btn"><spring:message code="signin"/></button>
+                <button type="submit" class="login-btn"><spring:message code="signIn"/></button>
 
                 <div class="secondary-actions">
                     <a href="#" onclick="return showForgotPasswordAlert()"><spring:message code="forget"/></a>
