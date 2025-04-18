@@ -177,11 +177,6 @@
             <a href="<c:url value='/userManagement'/>" class="nav-link"><spring:message code="admin.title" /></a>
         </c:if>
 
-        <row style="right: 0">
-            <a> <spring:message code="index.language" /> : </a>
-            <a href="?lang=en"> Eng</a>
-            <a href="?lang=zh_HK"> 繁中</a>
-        </row>
     </div>
 
     <div class="poll-container">
@@ -217,7 +212,6 @@
         
         <c:if test="${not empty user}">
             <div class="comment-form">
-                <h3><spring:message code="material.discussion" text="Discussion"/></h3>
                 <form action="<c:url value='/polls/PollComment'/>" method="post">
                     <input type="hidden" name="pollId" value="${poll.id}">
                     <textarea name="comment" placeholder="Share your thoughts about this poll..."></textarea>
@@ -231,7 +225,6 @@
         <h3><spring:message code="material.previous" text="Previous Comments"/></h3>
 
         <div class="comments-section">
-    <h3><spring:message code="material.previous" text="Previous Comments"/></h3>
             <c:forEach var="comment" items="${poll.comments}" varStatus="status">
                 <c:if test="${status.index % 5 == 0}">
                     <div class="comment">

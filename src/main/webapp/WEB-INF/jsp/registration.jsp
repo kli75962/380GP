@@ -190,7 +190,7 @@
             <button type="submit" class="register-btn"><spring:message code="createAccount"/></button>
             
             <div class="login-link">
-                <spring:message code="register.message"/><a href="<c:url value='/login'/>"><spring:message code="register.signinHere"/>/a>
+                <spring:message code="register.message"/><a href="<c:url value='/login'/>"><spring:message code="register.signinHere"/>
             </div>
         </form:form>
     </div>

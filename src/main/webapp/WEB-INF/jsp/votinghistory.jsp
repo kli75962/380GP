@@ -75,16 +75,7 @@
     </style>
 </head>
 <body>
-<div class="login-status">
-    <c:choose>
-        <c:when test="${not empty pageContext.request.userPrincipal}">
-            <spring:message code="welcome" />, ${pageContext.request.userPrincipal.name} | <a href="<c:url value='/logout'/>">Logout</a>
-        </c:when>
-        <c:otherwise>
-            <a href="<c:url value='/login'/>"><spring:message code="signIn" /></a> | <a href="<c:url value='/register'/>">Register</a>
-        </c:otherwise>
-    </c:choose>
-</div>
+
 
 <div class="header">
     <h1><spring:message code="title" /></h1>
@@ -99,11 +90,11 @@
     <c:if test="${not empty user && user.role eq 'TEACHER'}">
         <a href="<c:url value='/userManagement'/>" class="nav-link"><spring:message code="admin.title" /></a>
     </c:if>
-    <row style="right: 0">
-        <a> <spring:message code="index.language" /> : </a>
-        <a href="?lang=en"> Eng</a>
-        <a href="?lang=zh_HK"> 繁中</a>
-    </row>
+            <row style="right: 0">
+            <a> <spring:message code="index.language" /> : </a>
+            <a href="?lang=en"> Eng</a>
+            <a href="?lang=zh_HK"> 繁中</a>
+        </row>
 
 </div>
 <div class="history-container">

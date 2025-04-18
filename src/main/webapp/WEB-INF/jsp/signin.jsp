@@ -206,13 +206,6 @@
                     <a href="<c:url value='/register'/>"><spring:message code="createAccount"/></a>
                 </div>
 
-                <div class="divider">
-                    <span>or</span>
-                </div>
-
-                <button type="button" class="login-btn" style="background-color: #4285F4;">
-                    <spring:message code="signin.message2"/>
-                </button>
             </form>
         </div>
     </body>
