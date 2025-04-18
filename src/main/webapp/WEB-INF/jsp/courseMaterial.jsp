@@ -174,9 +174,10 @@
 </div>
 
 <div class="nav">
-    <!------------- Head ------------------------------- Head --------------------------------- Head ----------------------------------------------->
     <a href="<c:url value='/'/>" class="nav-link"><spring:message code="index.homepage" /></a>
+    <a href="#"><spring:message code="index.lectures" /></a>
 
+    <a href="#"><spring:message code="index.polls" /></a>
     <c:if test="${not empty user}">
         <a href="<c:url value='/commenthistory'/>" class="nav-link"><spring:message code="index.commentHistory" /></a>
     </c:if>
@@ -187,7 +188,7 @@
 
     <!--------origin/main----------->
     <c:if test="${not empty user && user.role eq 'TEACHER'}">
-        <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
+        <a href="<c:url value='/userManagement'/>" class="nav-link"><spring:message code="admin.title" /></a>
     </c:if>
 
 
@@ -196,7 +197,6 @@
         <a href="?lang=en"> Eng</a>
         <a href="?lang=zh_HK"> 繁中</a>
     </row>
-
 </div>
 
 <div class="section">
@@ -224,12 +224,15 @@
     </c:if>
 
     <div class="course-material-form" id="course-material-form">
-        <form method="post" action="addMaterial" enctype="multipart/form-data">
-            <input type="hidden" name="lectureTitle" value="${lectureTitle}" />
-            <input type="hidden" name="lectureId" value="${lectureId}" />
-            <input type="file" name="file" id="fileUpload" required />
-            <button type="submit"><spring:message code="material.addMaterial" /></button>
-        </form>
+        <c:if test="${user.role eq 'TEACHER'}">
+            <form method="post" action="addMaterial" enctype="multipart/form-data">
+                <input type="hidden" name="lectureTitle" value="${lectureTitle}" />
+                <input type="hidden" name="lectureId" value="${lectureId}" />
+                <input type="file" name="file" id="fileUpload" required />
+                <button type="submit"><spring:message code="material.addMaterial" /></button>
+            </form>
+        </c:if>
+
 
     </div>
     <!-- If no download links, show a message -->
@@ -271,7 +274,9 @@
                                 <input type="hidden" name="lectureTitle" value="${lectureTitle}" />
                                 <input type="hidden" name="lectureId" value="${lectureId}" />
                                 <input type="hidden" name="commentId" value="${comment.id}" />
-                               <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this comment?')"><spring:message code="delete"/></button>
+                               <button type="submit" class="delete-btn"
+                                       onclick="return confirm('Are you sure you want to delete this comment?')">
+                                   <spring:message code="delete"/></button>
                             </form>
                         </c:if>
                     </div>
