@@ -174,8 +174,9 @@
         </c:if>
         <!--------origin/main----------->
         <c:if test="${not empty user && user.role eq 'TEACHER'}">
-            <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
+            <a href="<c:url value='/userManagement'/>" class="nav-link"><spring:message code="admin.title" /></a>
         </c:if>
+
         <row style="right: 0">
             <a> <spring:message code="index.language" /> : </a>
             <a href="?lang=en"> Eng</a>

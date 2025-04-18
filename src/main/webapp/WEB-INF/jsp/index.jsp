@@ -245,7 +245,7 @@
 
     <!--------origin/main----------->
     <c:if test="${not empty user && user.role eq 'TEACHER'}">
-        <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
+        <a href="<c:url value='/userManagement'/>" class="nav-link"><spring:message code="admin.title" /></a>
     </c:if>
 
 

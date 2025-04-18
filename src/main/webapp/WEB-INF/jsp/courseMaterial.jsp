@@ -191,7 +191,6 @@
         <a href="<c:url value='/userManagement'/>" class="nav-link"><spring:message code="admin.title" /></a>
     </c:if>
 
-
     <row style="right: 0">
         <a> <spring:message code="index.language" /> : </a>
         <a href="?lang=en"> Eng</a>

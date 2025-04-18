@@ -81,7 +81,7 @@
             <spring:message code="welcome"/>, ${pageContext.request.userPrincipal.name} | <a href="<c:url value='/logout'/>"><spring:message code="index.logout"/></a>
         </c:when>
         <c:otherwise>
-            <a href="<c:url value='/login'/>">Sign In</a> | <a href="<c:url value='/register'/>"><spring:message code="index.register"/></a>
+            <a href="<c:url value='/login'/>"><spring:message code="signIn" /></a> | <a href="<c:url value='/register'/>"><spring:message code="index.register"/></a>
         </c:otherwise>
     </c:choose>
 </div>
@@ -92,7 +92,7 @@
 
 <div class="nav">
   <a href="<c:url value='/'/>" class="nav-link"><spring:message code="index.homepage" /></a>
-    <a href="<c:url value='/courseMaterials'/>"><spring:message code="index.courseMaterial"/></a>
+
     <a href="<c:url value='/commenthistory'/>" class="nav-link"><spring:message code="index.commentHistory" /></a>
     <a href="<c:url value='/polls'/>"><spring:message code="index.polls"/></a>
     <a href="<c:url value='/votinghistory'/>" class="nav-link"><spring:message code="index.pollsHistory" /></a>
@@ -100,11 +100,7 @@
     <c:if test="${not empty user && user.role eq 'TEACHER'}">
         <a href="<c:url value='/userManagement'/>" class="nav-link"><spring:message code="admin.title"/></a>
     </c:if>
-    <row style="right: 0">
-        <a> <spring:message code="index.language" /> : </a>
-        <a href="?lang=en"> Eng</a>
-        <a href="?lang=zh_HK"> 繁中</a>
-    </row>
+
 </div>
 
 <div class="history-container">
@@ -128,8 +124,8 @@
     <c:forEach var="comment" items="${lectureComments}">
         <div class="history-item">
             <div class="history-meta" data-timestamp="${comment.timestamp}"></div>
-            <div><strong>Lecture:</strong> <c:out value="${comment.lecture.title}" /></div>
-            <div><strong>Comment:</strong> <c:out value="${comment.content}" /></div>
+            <div><strong><spring:message code="lecture"/>:</strong> <c:out value="${comment.lecture.title}" /></div>
+            <div><strong><spring:message code="material.comments"/>:</strong> <c:out value="${comment.content}" /></div>
         </div>
     </c:forEach>
     <c:if test="${empty lectureComments}">

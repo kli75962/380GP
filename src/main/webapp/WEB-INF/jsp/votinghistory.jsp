@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,16 +78,16 @@
 <div class="login-status">
     <c:choose>
         <c:when test="${not empty pageContext.request.userPrincipal}">
-            Welcome, ${pageContext.request.userPrincipal.name} | <a href="<c:url value='/logout'/>">Logout</a>
+            <spring:message code="welcome" />, ${pageContext.request.userPrincipal.name} | <a href="<c:url value='/logout'/>">Logout</a>
         </c:when>
         <c:otherwise>
-            <a href="<c:url value='/login'/>">Sign In</a> | <a href="<c:url value='/register'/>">Register</a>
+            <a href="<c:url value='/login'/>"><spring:message code="signIn" /></a> | <a href="<c:url value='/register'/>">Register</a>
         </c:otherwise>
     </c:choose>
 </div>
 
 <div class="header">
-    <h1>Web Applications: Design and Development</h1>
+    <h1><spring:message code="title" /></h1>
 </div>
 
 <div class="nav">
@@ -96,7 +97,7 @@
     <a href="<c:url value='/votinghistory'/>" class="nav-link"><spring:message code="index.pollsHistory" /></a>
     <!--------origin/main----------->
     <c:if test="${not empty user && user.role eq 'TEACHER'}">
-        <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
+        <a href="<c:url value='/userManagement'/>" class="nav-link"><spring:message code="admin.title" /></a>
     </c:if>
     <row style="right: 0">
         <a> <spring:message code="index.language" /> : </a>
@@ -106,17 +107,17 @@
 
 </div>
 <div class="history-container">
-    <h2>Your Voting History</h2>
+    <h2><spring:message code="votingHis.title" /></h2>
     <c:forEach var="vote" items="${votes}">
         <div class="history-item">
             <div class="history-meta" data-timestamp="${vote.votedAt}"></div>
-            <div><strong>Poll:</strong> <c:out value="${vote.poll.question}" /></div>
-            <div><strong>Selected Option:</strong> <c:out value="${vote.option.optionText}" /></div>
+            <div><strong><spring:message code="poll"/>:</strong> <c:out value="${vote.poll.question}" /></div>
+            <div><strong><spring:message code="selectedOption"/>:</strong> <c:out value="${vote.option.optionText}" /></div>
         </div>
     </c:forEach>
     <c:if test="${empty votes}">
         <div class="history-item">
-            No votes found.
+            <spring:message code="votingHis.noVotes"/>
         </div>
     </c:if>
 </div>
