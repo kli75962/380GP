@@ -375,7 +375,7 @@
 <script>
     function alertLoginRequired(event) {
         event.preventDefault();
-        alert("You need to login to poll.");
+        alert("You need to login to view this page.");
     }
     function toggleLectureInput() {
         const modal = document.getElementById('lectureModal');
