@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -233,24 +235,21 @@
 </head>
 <body>
     <div class="header">
-        <h1>User Management</h1>
+        <h1><spring:message code="admin.title" text="User Management"/></h1>
     </div>
 
     <div class="nav">
-        <!------------- Head ------------------------------- Head --------------------------------- Head ----------------------------------------------->
         <a href="<c:url value='/'/>" class="nav-link"><spring:message code="index.homepage" /></a>
         <a href="<c:url value='/commenthistory'/>" class="nav-link"><spring:message code="index.commentHistory" /></a>
         <a href="<c:url value='/votinghistory'/>" class="nav-link"><spring:message code="index.pollsHistory" /></a>
-        <!--------origin/main----------->
         <c:if test="${not empty user && user.role eq 'TEACHER'}">
-            <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
+            <a href="<c:url value='/userManagement'/>" class="nav-link"><spring:message code="admin.title"/></a>
         </c:if>
         <row style="right: 0">
             <a> <spring:message code="index.language" /> : </a>
             <a href="?lang=en"> Eng</a>
             <a href="?lang=zh_HK"> 繁中</a>
         </row>
-
     </div>
 
     <div class="management-container">
@@ -268,20 +267,20 @@
 
         <div class="action-bar">
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search users...">
+                <input type="text" id="searchInput" placeholder=" <spring:message code="search"/>">
             </div>
-            <button class="btn btn-success" onclick="openModal('addUserModal')">Add New User</button>
+            <button class="btn btn-success" onclick="openModal('addUserModal')"><spring:message code="admin.add"/></button>
         </div>
 
         <table>
             <thead>
                 <tr>
-                    <th>Username</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Role</th>
-                    <th>Actions</th>
+                    <th><spring:message code="register.username" /></th>
+                    <th><spring:message code="admin.name"/></th>
+                    <th><spring:message code="register.email"/></th>
+                    <th><spring:message code="register.phone" /></th>
+                    <th><spring:message code="admin.role" /></th>
+                    <th><spring:message code="admin.action" /></th>
                 </tr>
             </thead>
             <tbody>
@@ -292,11 +291,20 @@
                         <td>${user.email}</td>
                         <td>${user.phoneNumber}</td>
                         <td>
-                            <span class="user-role role-${user.role.toLowerCase()}">${user.role}</span>
+                            <span class="user-role role-${user.role.toLowerCase()}">
+                                 <c:choose >
+                                     <c:when test="${user.role == 'ADMIN'}">
+                                       <spring:message code="admin.admin"/>
+                                     </c:when>
+                                     <c:otherwise>
+                                         <spring:message code="admin.student"/>
+                                     </c:otherwise>
+                                 </c:choose>
+                            </span>
                         </td>
                         <td class="action-icons">
-                            <i onclick="openEditModal('${user.id}', '${user.username}', '${user.name}', '${user.email}', '${user.phoneNumber}', '${user.role}')" style="color: #3498db">Edit</i>
-                            <i onclick="confirmDelete('${user.id}', '${user.username}')" style="color: #e74c3c">Delete</i>
+                            <i onclick="openEditModal('${user.id}', '${user.username}', '${user.name}', '${user.email}', '${user.phoneNumber}', '${user.role}')" style="color: #3498db"><spring:message code="edit"/></i>
+                            <i onclick="confirmDelete('${user.id}', '${user.username}')" style="color: #e74c3c"><spring:message code="delete"/></i>
                         </td>
                     </tr>
                 </c:forEach>
@@ -306,38 +314,38 @@
 
     <div id="addUserModal" class="modal">
         <div class="modal-content">
-            <h2>Add New User</h2>
+            <h2><spring:message code="admin.add"/></h2>
             <form id="addUserForm" action="<c:url value='/userManagement/add'/>" method="post">
                 <div class="form-group">
-                    <label for="newUsername">Username</label>
+                    <label for="newUsername"><spring:message code="register.username"/></label>
                     <input type="text" id="newUsername" name="username" required>
                 </div>
                 <div class="form-group">
-                    <label for="newPassword">Password</label>
+                    <label for="newPassword"><spring:message code="password"/></label>
                     <div class="password-container">
                         <input type="password" id="newPassword" name="password" required>
                         <span class="password-toggle" onclick="togglePasswordVisibility('newPassword')">👁️</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="newName">Full Name</label>
+                    <label for="newName"><spring:message code="register.fullName"/></label>
                     <input type="text" id="newName" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="newEmail">Email</label>
+                    <label for="newEmail"><spring:message code="register.email"/></label>
                     <input type="email" id="newEmail" name="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="newPhone">Phone</label>
+                    <label for="newPhone"><spring:message code="register.phone"/></label>
                     <input type="text" id="newPhone" name="phone">
                 </div>
                 <div class="form-group">
-                    <label for="newRole">Role</label>
-                    <input type="text" id="newRole" name="role" value="STUDENT" readonly>
+                    <label for="newRole"><spring:message code="admin.role"/></label>
+                    <input type="text" id="newRole" name="role" value="<spring:message code="admin.student"/>" readonly>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn" onclick="closeModal('addUserModal')">Cancel</button>
-                    <button type="submit" class="btn btn-success">Add User</button>
+                    <button type="button" class="btn" onclick="closeModal('addUserModal')"><spring:message code="cancel"/></button>
+                    <button type="submit" class="btn btn-success"><spring:message code="admin.add"/></button>
                 </div>
             </form>
         </div>
@@ -345,44 +353,43 @@
 
     <div id="editUserModal" class="modal">
         <div class="modal-content">
-            <h2>Edit User</h2>
+            <h2><spring:message code="admin.editUser"/></h2>
             <form id="editUserForm" action="<c:url value='/userManagement/update'/>" method="post">
                 <input type="hidden" id="editUserId" name="id">
                 <div class="form-group">
-                    <label for="editUsername">Username</label>
+                    <label for="editUsername"><spring:message code="register.username"/></label>
                     <input type="text" id="editUsername" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="editName">Full Name</label>
+                    <label for="editName"><spring:message code="register.fullName"/></label>
                     <input type="text" id="editName" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="editEmail">Email</label>
+                    <label for="editEmail"><spring:message code="register.email"/></label>
                     <input type="email" id="editEmail" name="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="editPhone">Phone</label>
+                    <label for="editPhone"><spring:message code="register.phone"/></label>
                     <input type="text" id="editPhone" name="phone">
                 </div>
                 <div class="form-group">
-                    <label for="editRole">Role</label>
+                    <label for="editRole"><spring:message code="admin.role"/></label>
                     <input type="text" id="editRole" name="role" value="STUDENT" readonly>
                 </div>
                 <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="resetPassword" name="resetPassword"> Reset Password
-                    </label>
+                        <label><spring:message code="resetPassword"/></label>
+                        <input  type="checkbox" id="resetPassword" name="resetPassword"/>
                 </div>
                 <div class="form-group" id="newPasswordGroup" style="display: none;">
-                    <label for="nPassword">New Password</label>
+                    <label for="nPassword"><spring:message code="admin.newPassword"/></label>
                     <div class="password-container">
                         <input type="password" id="nPassword" name="newPassword">
                         <span class="password-toggle" onclick="togglePasswordVisibility('nPassword')">👁️</span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn" onclick="closeModal('editUserModal')">Cancel</button>
-                    <button type="submit" class="btn">Save Changes</button>
+                    <button type="button" class="btn" onclick="closeModal('editUserModal')"><spring:message code="cancel"/></button>
+                    <button type="submit" class="btn"><spring:message code="save"/></button>
                 </div>
             </form>
         </div>
@@ -390,13 +397,13 @@
 
     <div id="deleteModal" class="modal">
         <div class="modal-content">
-            <h2>Confirm Delete</h2>
-            <p>Are you sure you want to delete user: <span id="deleteUsername"></span>?</p>
+            <h2><spring:message code="admin.confirmDelete"/></h2>
+            <p><spring:message code="admin.deleteMessage"/>: <span id="deleteUsername"></span>?</p>
             <div class="modal-footer">
-                <button class="btn" onclick="closeModal('deleteModal')">Cancel</button>
+                <button class="btn" onclick="closeModal('deleteModal')"><spring:message code="cancel"/></button>
                 <form id="deleteForm" action="<c:url value='/userManagement/delete'/>" method="post" style="display: inline;">
                     <input type="hidden" id="deleteUserId" name="id">
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger"><spring:message code="delete"/></button>
                 </form>
             </div>
         </div>
