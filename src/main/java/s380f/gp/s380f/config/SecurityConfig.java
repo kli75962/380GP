@@ -14,37 +14,35 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers("/student/**").hasAnyRole("STUDENT", "TEACHER")
-                    .requestMatchers("/teacher/**").hasAnyRole("TEACHER")
-                    .anyRequest().permitAll()
-            )
-            .exceptionHandling(exception -> exception
-                    .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/index"))
-                    .accessDeniedHandler((request, response, accessDeniedException) -> {
-                      response.sendRedirect("/index");
-                    })
-            )
-            .formLogin(form -> form
-                    .loginPage("/login")
-                    .loginProcessingUrl("/login")
-                    .permitAll()
-            )
-            .logout(logout -> logout
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/")
-                    .permitAll()
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                .csrf(csrf -> csrf.disable())
+                                .authorizeHttpRequests(authorize -> authorize
+                                                .requestMatchers("/student/**").hasAnyRole("STUDENT", "TEACHER")
+                                                .requestMatchers("/teacher/**").hasAnyRole("TEACHER")
+                                                .anyRequest().permitAll())
+                                .exceptionHandling(exception -> exception
+                                                .authenticationEntryPoint(
+                                                                new LoginUrlAuthenticationEntryPoint("/index"))
+                                                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                                                        response.sendRedirect("/index");
+                                                }))
+                                .formLogin(form -> form
+                                                .loginPage("/login")
+                                                .loginProcessingUrl("/login")
+                                                .permitAll())
+                                .logout(logout -> logout
+                                                .logoutUrl("/logout")
+                                                .logoutSuccessUrl("/")
+                                                .permitAll()
 
-            )
-//            .rememberMe(rememberMe -> rememberMe
-//                    .key("uniqueAndSecret") // use a unique key
-//                    .rememberMeParameter("remember-me")
-//                    .tokenValiditySeconds(86400))
-    ;
-    return http.build();
-  }
+                                )
+                // .rememberMe(rememberMe -> rememberMe
+                // .key("uniqueAndSecret") // use a unique key
+                // .rememberMeParameter("remember-me")
+                // .tokenValiditySeconds(86400))
+                ;
+                return http.build();
+        }
 }

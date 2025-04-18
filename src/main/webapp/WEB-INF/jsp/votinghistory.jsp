@@ -90,11 +90,21 @@
 </div>
 
 <div class="nav">
-    <a href="<c:url value='/'/>">Home</a>
-    <a href="<c:url value='/courseMaterials'/>">Course Materials</a>
-    <a href="<c:url value='/polls'/>">Polls</a>
-</div>
+    <!------------- Head ------------------------------- Head --------------------------------- Head ----------------------------------------------->
+    <a href="<c:url value='/'/>" class="nav-link"><spring:message code="index.homepage" /></a>
+    <a href="<c:url value='/commenthistory'/>" class="nav-link"><spring:message code="index.commentHistory" /></a>
+    <a href="<c:url value='/votinghistory'/>" class="nav-link"><spring:message code="index.pollsHistory" /></a>
+    <!--------origin/main----------->
+    <c:if test="${not empty user && user.role eq 'TEACHER'}">
+        <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
+    </c:if>
+    <row style="right: 0">
+        <a> <spring:message code="index.language" /> : </a>
+        <a href="?lang=en"> Eng</a>
+        <a href="?lang=zh_HK"> 繁中</a>
+    </row>
 
+</div>
 <div class="history-container">
     <h2>Your Voting History</h2>
     <c:forEach var="vote" items="${votes}">

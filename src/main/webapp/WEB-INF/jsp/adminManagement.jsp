@@ -237,9 +237,20 @@
     </div>
 
     <div class="nav">
-        <a href="index.jsp">Home</a>
-        <a href="courseManagement.jsp">Course Materials</a>
-        <a href="pollManagement.jsp">Poll Management</a>
+        <!------------- Head ------------------------------- Head --------------------------------- Head ----------------------------------------------->
+        <a href="<c:url value='/'/>" class="nav-link"><spring:message code="index.homepage" /></a>
+        <a href="<c:url value='/commenthistory'/>" class="nav-link"><spring:message code="index.commentHistory" /></a>
+        <a href="<c:url value='/votinghistory'/>" class="nav-link"><spring:message code="index.pollsHistory" /></a>
+        <!--------origin/main----------->
+        <c:if test="${not empty user && user.role eq 'TEACHER'}">
+            <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
+        </c:if>
+        <row style="right: 0">
+            <a> <spring:message code="index.language" /> : </a>
+            <a href="?lang=en"> Eng</a>
+            <a href="?lang=zh_HK"> 繁中</a>
+        </row>
+
     </div>
 
     <div class="management-container">

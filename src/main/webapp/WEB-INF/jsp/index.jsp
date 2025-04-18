@@ -124,13 +124,13 @@
             transition: all 0.3s ease;
             margin-bottom: 10px;
         }
-        
+
         .action-btn:hover {
             background-color: #2980b9;
             transform: translateY(-1px);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        
+
         .delete-btn {
             background-color: #e74c3c;
             color: white;
@@ -141,17 +141,17 @@
             font-size: 0.9em;
             transition: all 0.3s ease;
         }
-        
+
         .delete-btn:hover {
             background-color: #c0392b;
             transform: translateY(-1px);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        
+
         .form-group {
             margin-bottom: 15px;
         }
-        
+
         .form-group input {
             padding: 8px;
             border: 1px solid #ddd;
@@ -159,19 +159,19 @@
             width: 100%;
             box-sizing: border-box;
         }
-        
+
         .form-group input:focus {
             outline: none;
             border-color: #3498db;
             box-shadow: 0 0 5px rgba(52,152,219,0.3);
         }
-        
+
         .form-group label {
             display: block;
             margin-bottom: 5px;
             color: #2c3e50;
         }
-        
+
         .modal {
             display: none;
             position: fixed;
@@ -182,7 +182,7 @@
             height: 100%;
             background-color: rgba(0,0,0,0.4);
         }
-        
+
         .modal-content {
             background-color: #fefefe;
             margin: 10% auto;
@@ -193,7 +193,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             position: relative;
         }
-        
+
         .close {
             color: #aaa;
             float: right;
@@ -204,159 +204,179 @@
             right: 20px;
             top: 10px;
         }
-        
+
         .close:hover {
             color: black;
         }
-        
+
         .item-content {
             flex-grow: 1;
         }
     </style>
 </head>
 <body>
-    <div class="login-status">
-        <c:choose>
-            <c:when test="${not empty user}">
-                <spring:message code="welcome"/>, <a href="<c:url value='/userEdit'/>" class="username-link">${user.username}</a> | <a href="<c:url value='/logout'/>"><spring:message code="index.logout" /></a>
-            </c:when>
-            <c:otherwise>
-                <a href="<c:url value='/login'/>"><spring:message code="signIn" /></a> | <a href="<c:url value='/register'/>"><spring:message code="index.register" /></a>
-            </c:otherwise>
-        </c:choose>
-    </div>
+<div class="login-status">
+    <c:choose>
+        <c:when test="${not empty user}">
+            <spring:message code="welcome"/>, <a href="<c:url value='/userEdit'/>" class="username-link">${user.username}</a> | <a href="<c:url value='/logout'/>"><spring:message code="index.logout" /></a>
+        </c:when>
+        <c:otherwise>
+            <a href="<c:url value='/login'/>"><spring:message code="signIn" /></a> | <a href="<c:url value='/register'/>"><spring:message code="index.register" /></a>
+        </c:otherwise>
+    </c:choose>
+</div>
 
-    <div class="header">
-        <h1><spring:message code="title" /></h1>
-        <div class="course-code">COMP 3820SEF / S380F / S380W</div>
-    </div>
+<div class="header">
+    <h1><spring:message code="title" /></h1>
+    <div class="course-code">COMP 3820SEF / S380F / S380W</div>
+</div>
 
-    <div class="nav">
-<!------------- Head ------------------------------- Head --------------------------------- Head ----------------------------------------------->
-        <a href="<c:url value='/'/>" class="nav-link"><spring:message code="index.homepage" /></a>
+<div class="nav">
+    <!------------- Head ------------------------------- Head --------------------------------- Head ----------------------------------------------->
+    <a href="<c:url value='/'/>" class="nav-link"><spring:message code="index.homepage" /></a>
 
-        <c:if test="${not empty user}">
-            <a href="<c:url value='/commenthistory'/>" class="nav-link"><spring:message code="index.commentHistory" /></a>
-        </c:if>
+    <c:if test="${not empty user}">
+        <a href="<c:url value='/commenthistory'/>" class="nav-link"><spring:message code="index.commentHistory" /></a>
+    </c:if>
 
-        <c:if test="${not empty user}">
-            <a href="<c:url value='/votinghistory'/>" class="nav-link"><spring:message code="index.pollsHistory" /></a>
-        </c:if>
+    <c:if test="${not empty user}">
+        <a href="<c:url value='/votinghistory'/>" class="nav-link"><spring:message code="index.pollsHistory" /></a>
+    </c:if>
 
-<!--------origin/main----------->
-        <c:if test="${not empty user && user.role eq 'TEACHER'}">
-            <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
-        </c:if>
+    <!--------origin/main----------->
+    <c:if test="${not empty user && user.role eq 'TEACHER'}">
+        <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
+    </c:if>
 
 
-        <row style="right: 0">
-            <a> <spring:message code="index.language" /> : </a>
-            <a href="?lang=en"> Eng</a>
-            <a href="?lang=zh_HK"> 繁中</a>
-        </row>
+    <row style="right: 0">
+        <a> <spring:message code="index.language" /> : </a>
+        <a href="?lang=en"> Eng</a>
+        <a href="?lang=zh_HK"> 繁中</a>
+    </row>
 
-    </div>
+</div>
 
-    <div class="section">
-       <h2><spring:message code="index.lectures" /></h2>
+<div class="section">
+    <h2><spring:message code="index.lectures" /></h2>
 
-        <c:if test="${user.role eq 'TEACHER'}">
-            <button class="action-btn" onclick="toggleLectureInput()"><spring:message code="addNew" /></button>
-        </c:if>
+    <c:if test="${user.role eq 'TEACHER'}">
+        <button class="action-btn" onclick="toggleLectureInput()"><spring:message code="addNew" /></button>
+    </c:if>
 
-        <ul class="lecture-list">
-            <c:forEach var="lecture" items="${lectures}">
-                <li class="lecture-item">
-                    <div class="item-content">
-                        <a href="<c:url value='/courseMaterial?title=${lecture.title}&id=${lecture.id}'/>">
+    <ul class="lecture-list">
+        <c:forEach var="lecture" items="${lectures}">
+            <li class="lecture-item">
+                <div class="item-content">
+                    <c:choose>
+                    <c:when test="${not empty user}">
+                    <a href="<c:url value='/courseMaterial?title=${lecture.title}&id=${lecture.id}'/>">
+                        </c:when>
+                        <c:otherwise>
+                        <a href="#" onclick="alertLoginRequired(event);">
+                            </c:otherwise>
+                            </c:choose>
                             <div class="lecture-title">${lecture.title}</div>
                         </a>
-                    </div>
-                    <c:if test="${user.role eq 'TEACHER'}">
-                        <form action="<c:url value='/deleteLecture'/>" method="post" style="display:inline;">
-                            <input type="hidden" name="lectureId" value="${lecture.id}" />
-                            <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this lecture?')">
-                                <spring:message code="delete"/>
-                            </button>
-                        </form>
-                    </c:if>
-                </li>
-            </c:forEach>
-        </ul>
 
-    </div>
+                </div>
+                <c:if test="${user.role eq 'TEACHER'}">
+                    <form action="<c:url value='/deleteLecture'/>" method="post" style="display:inline;">
+                        <input type="hidden" name="lectureId" value="${lecture.id}" />
+                        <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this lecture?')">
+                            <spring:message code="delete"/>
+                        </button>
+                    </form>
+                </c:if>
+            </li>
+        </c:forEach>
+    </ul>
+
+</div>
 
 
-    <div class="section">
-        <h2><spring:message code="index.currentPools" /></h2>
+<div class="section">
+    <h2><spring:message code="index.currentPools" /></h2>
 
-        <c:if test="${user.role eq 'TEACHER'}">
-            <button class="action-btn" onclick="togglePollInput()"><spring:message code="addNew" /></button>
-        </c:if>
+    <c:if test="${user.role eq 'TEACHER'}">
+        <button class="action-btn" onclick="togglePollInput()"><spring:message code="addNew" /></button>
+    </c:if>
 
-        <ul class="poll-list">
-            <c:forEach var="poll" items="${polls}">
-                <li class="poll-item">
-                    <div class="item-content">
-                        <a href="<c:url value='/polls/${poll.id}'/>">
+    <ul class="poll-list">
+        <c:forEach var="poll" items="${polls}">
+            <li class="poll-item">
+                <div class="item-content">
+                    <c:choose>
+                    <c:when test="${not empty user}">
+                    <a href="<c:url value='/polls/${poll.id}'/>">
+                        </c:when>
+                        <c:otherwise>
+                        <a href="#" onclick="alertLoginRequired(event);">
+                            </c:otherwise>
+                            </c:choose>
+
                             <div class="poll-question">${poll.question}</div>
                             <div class="poll-status">
                                 <spring:message code="index.voteUntil" />:
                                 <span class="comment-meta" data-timestamp="${poll.endDate}"></span>
                             </div>
                         </a>
-                    </div>
-                    <c:if test="${user.role eq 'TEACHER'}">
-                        <form action="<c:url value='/polls/delete'/>" method="post" style="display:inline;">
-                            <input type="hidden" name="pollId" value="${poll.id}" />
-                            <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this poll?')">
-                                <spring:message code="delete"/>
-                            </button>
-                        </form>
-                    </c:if>
-                </li>
-            </c:forEach>
-        </ul>
-    </div>
+                </div>
+                <c:if test="${user.role eq 'TEACHER'}">
+                    <form action="<c:url value='/polls/delete'/>" method="post" style="display:inline;">
+                        <input type="hidden" name="pollId" value="${poll.id}" />
+                        <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this poll?')">
+                            <spring:message code="delete"/>
+                        </button>
+                    </form>
+                </c:if>
+            </li>
+        </c:forEach>
+    </ul>
+</div>
 
-    <div id="lectureModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('lectureModal')">&times;</span>
-            <h2><spring:message code="addNew" /></h2>
-            <form action="<c:url value='/addLecture'/>" method="post">
-                <div class="form-group">
-                    <input type="text" name="title" placeholder="Enter lecture title" required />
-                </div>
-                <button type="submit" class="action-btn"><spring:message code="submit" /></button>
-            </form>
-        </div>
+<div id="lectureModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('lectureModal')">&times;</span>
+        <h2><spring:message code="addNew" /></h2>
+        <form action="<c:url value='/addLecture'/>" method="post">
+            <div class="form-group">
+                <input type="text" name="title" placeholder="Enter lecture title" required />
+            </div>
+            <button type="submit" class="action-btn"><spring:message code="submit" /></button>
+        </form>
     </div>
+</div>
 
-    <div id="pollModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('pollModal')">&times;</span>
-            <h2><spring:message code="addNew" /></h2>
-            <form action="<c:url value='/polls/add'/>" method="post">
-                <div class="form-group">
-                    <input type="text" name="question" placeholder="Enter poll question" required />
-                </div>
-                <div class="form-group">
-                    <input type="text" name="option1" placeholder="Option 1" required />
-                    <input type="text" name="option2" placeholder="Option 2" required />
-                    <input type="text" name="option3" placeholder="Option 3" required />
-                    <input type="text" name="option4" placeholder="Option 4" required />
-                </div>
-                <div class="form-group">
-                    <label for="endDate"><spring:message code="endDate" />:</label>
-                    <input type="datetime-local" name="endDate" id="endDate" required />
-                </div>
-                <button type="submit" class="action-btn"><spring:message code="submit" /></button>
-            </form>
-        </div>
+<div id="pollModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('pollModal')">&times;</span>
+        <h2><spring:message code="addNew" /></h2>
+        <form action="<c:url value='/polls/add'/>" method="post">
+            <div class="form-group">
+                <input type="text" name="question" placeholder="Enter poll question" required />
+            </div>
+            <div class="form-group">
+                <input type="text" name="option1" placeholder="Option 1" required />
+                <input type="text" name="option2" placeholder="Option 2" required />
+                <input type="text" name="option3" placeholder="Option 3" required />
+                <input type="text" name="option4" placeholder="Option 4" required />
+            </div>
+            <div class="form-group">
+                <label for="endDate"><spring:message code="endDate" />:</label>
+                <input type="datetime-local" name="endDate" id="endDate" required />
+            </div>
+            <button type="submit" class="action-btn"><spring:message code="submit" /></button>
+        </form>
     </div>
+</div>
 
 </body>
 <script>
+    function alertLoginRequired(event) {
+        event.preventDefault();
+        alert("You need to login to poll.");
+    }
     function toggleLectureInput() {
         const modal = document.getElementById('lectureModal');
         modal.style.display = 'block';
@@ -364,7 +384,7 @@
         modal.style.top = '0';
         modal.style.left = '0';
     }
-    
+
     function togglePollInput() {
         const modal = document.getElementById('pollModal');
         modal.style.display = 'block';
@@ -398,7 +418,7 @@
         const modal = document.getElementById(modalId);
         modal.style.display = 'none';
     }
-    
+
     window.onclick = function(event) {
         if (event.target.className === 'modal') {
             event.target.style.display = 'none';

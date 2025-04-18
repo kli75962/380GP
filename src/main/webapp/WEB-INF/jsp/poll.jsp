@@ -162,9 +162,25 @@
     </div>
 
     <div class="nav">
-        <a href="<c:url value='/'/>"><spring:message code="index.homepage" /></a>
-        <a href="<c:url value='/courseMaterials'/>"><spring:message code="index.courseMaterial" /></a>
-        <a href="<c:url value='/polls'/>"><spring:message code="index.polls" /></a>
+        <!------------- Head ------------------------------- Head --------------------------------- Head ----------------------------------------------->
+        <a href="<c:url value='/'/>" class="nav-link"><spring:message code="index.homepage" /></a>
+
+        <c:if test="${not empty user}">
+            <a href="<c:url value='/commenthistory'/>" class="nav-link"><spring:message code="index.commentHistory" /></a>
+        </c:if>
+
+        <c:if test="${not empty user}">
+            <a href="<c:url value='/votinghistory'/>" class="nav-link"><spring:message code="index.pollsHistory" /></a>
+        </c:if>
+        <!--------origin/main----------->
+        <c:if test="${not empty user && user.role eq 'TEACHER'}">
+            <a href="<c:url value='/userManagement'/>" class="nav-link">User Management</a>
+        </c:if>
+        <row style="right: 0">
+            <a> <spring:message code="index.language" /> : </a>
+            <a href="?lang=en"> Eng</a>
+            <a href="?lang=zh_HK"> 繁中</a>
+        </row>
     </div>
 
     <div class="poll-container">

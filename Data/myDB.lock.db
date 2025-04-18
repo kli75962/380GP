@@ -1,6 +1,6 @@
 #FileLock
-#Fri Apr 18 11:54:01 HKT 2025
-server=192.168.0.177\:42689
-hostName=archlinux
+#Fri Apr 18 19:37:04 HKT 2025
+server=localhost\:54808
+hostName=localhost
 method=file
-id=196470832c14e5546980f82f2328d3d2d45707eb3b2
+id=19648b0221470d70f1101d95f20567372212ec036b9
