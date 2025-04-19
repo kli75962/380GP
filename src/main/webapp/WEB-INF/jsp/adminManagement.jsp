@@ -320,32 +320,51 @@
                     <label for="newUsername"><spring:message code="register.username"/></label>
                     <input type="text" id="newUsername" name="username" required>
                 </div>
+
                 <div class="form-group">
                     <label for="newPassword"><spring:message code="password"/></label>
                     <div class="password-container">
-                        <input type="password" id="newPassword" name="password" required>
+                        <input type="password" id="newPassword" name="password"
+                               pattern="^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$"
+                               title="Must be at least 8 characters, include one number and one special character"
+                               required>
                         <span class="password-toggle" onclick="togglePasswordVisibility('newPassword')">👁️</span>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="newName"><spring:message code="register.fullName"/></label>
                     <input type="text" id="newName" name="name" required>
                 </div>
+
                 <div class="form-group">
                     <label for="newEmail"><spring:message code="register.email"/></label>
-                    <input type="email" id="newEmail" name="email" required>
+                    <input type="email" id="newEmail" name="email"
+                           title="Enter a valid email address (must contain ‘@’)"
+                           required>
                 </div>
+
                 <div class="form-group">
                     <label for="newPhone"><spring:message code="register.phone"/></label>
-                    <input type="text" id="newPhone" name="phone">
+                    <input type="text" id="newPhone" name="phone"
+                           pattern="\d{8}" minlength="8" maxlength="8"
+                           title="Phone number must be exactly 8 digits (0-9)"
+                           required>
                 </div>
+
                 <div class="form-group">
                     <label for="newRole"><spring:message code="admin.role"/></label>
-                    <input type="text" id="newRole" name="role" value="<spring:message code="admin.student"/>" readonly>
+                    <input type="text" id="newRole" name="role"
+                           value="<spring:message code='admin.student'/>" readonly>
                 </div>
+
                 <div class="modal-footer">
-                    <button type="button" class="btn" onclick="closeModal('addUserModal')"><spring:message code="cancel"/></button>
-                    <button type="submit" class="btn btn-success"><spring:message code="admin.add"/></button>
+                    <button type="button" class="btn" onclick="closeModal('addUserModal')">
+                        <spring:message code="cancel"/>
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <spring:message code="admin.add"/>
+                    </button>
                 </div>
             </form>
         </div>
@@ -356,44 +375,66 @@
             <h2><spring:message code="admin.editUser"/></h2>
             <form id="editUserForm" action="<c:url value='/userManagement/update'/>" method="post">
                 <input type="hidden" id="editUserId" name="id">
+
                 <div class="form-group">
                     <label for="editUsername"><spring:message code="register.username"/></label>
-                    <input type="text" id="editUsername" readonly>
+                    <input type="text" id="editUsername" name="username" >
                 </div>
+
                 <div class="form-group">
                     <label for="editName"><spring:message code="register.fullName"/></label>
                     <input type="text" id="editName" name="name" required>
                 </div>
+
                 <div class="form-group">
                     <label for="editEmail"><spring:message code="register.email"/></label>
-                    <input type="email" id="editEmail" name="email" required>
+                    <input type="email" id="editEmail" name="email"
+                           title="Enter a valid email address (must contain ‘@’)"
+                           required>
                 </div>
+
                 <div class="form-group">
                     <label for="editPhone"><spring:message code="register.phone"/></label>
-                    <input type="text" id="editPhone" name="phone">
+                    <input type="text" id="editPhone" name="phone"
+                           pattern="\d{8}" minlength="8" maxlength="8"
+                           title="Phone number must be exactly 8 digits (0-9)"
+                           required>
                 </div>
+
                 <div class="form-group">
                     <label for="editRole"><spring:message code="admin.role"/></label>
-                    <input type="text" id="editRole" name="role" value="" readonly>STUDENT
+                    <input type="text" id="editRole" name="role" value="" readonly>
                 </div>
+
                 <div class="form-group">
-                        <label><spring:message code="resetPassword"/></label>
-                        <input  type="checkbox" id="resetPassword" name="resetPassword"/>
+                    <label><spring:message code="resetPassword"/></label>
+                    <input type="checkbox" id="resetPassword" name="resetPassword"/>
                 </div>
+
                 <div class="form-group" id="newPasswordGroup" style="display: none;">
                     <label for="nPassword"><spring:message code="admin.newPassword"/></label>
                     <div class="password-container">
-                        <input type="password" id="nPassword" name="newPassword">
+                        <input type="password" id="nPassword" name="newPassword"
+                               pattern="^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$"
+                               title="Must be at least 8 characters, include one number and one special character">
                         <span class="password-toggle" onclick="togglePasswordVisibility('nPassword')">👁️</span>
                     </div>
                 </div>
+
                 <div class="modal-footer">
-                    <button type="button" class="btn" onclick="closeModal('editUserModal')"><spring:message code="cancel"/></button>
-                    <button type="submit" class="btn"><spring:message code="save"/></button>
+                    <button type="button" class="btn" onclick="closeModal('editUserModal')">
+                        <spring:message code="cancel"/>
+                    </button>
+                    <button type="submit" class="btn">
+                        <spring:message code="save"/>
+                    </button>
                 </div>
             </form>
         </div>
     </div>
+
+
+
 
     <div id="deleteModal" class="modal">
         <div class="modal-content">

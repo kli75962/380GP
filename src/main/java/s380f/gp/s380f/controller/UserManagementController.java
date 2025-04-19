@@ -49,6 +49,7 @@ public class UserManagementController {
 
   @PostMapping("/userManagement/update")
   public String updateUser(@RequestParam String id,
+                           @RequestParam String username,
       @RequestParam String name,
       @RequestParam String email,
       @RequestParam(required = false) String phone,
@@ -57,7 +58,7 @@ public class UserManagementController {
       @RequestParam(required = false) String newPassword,
       RedirectAttributes redirectAttributes) {
     try {
-      userService.updateUserByTeacher(id, name, email, phone, role, resetPassword, newPassword);
+      userService.updateUserByTeacher(id,username, name, email, phone, role, resetPassword, newPassword);
       redirectAttributes.addFlashAttribute("successMessage", "User updated successfully");
     } catch (Exception e) {
       redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());

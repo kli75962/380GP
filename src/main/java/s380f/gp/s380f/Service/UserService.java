@@ -80,14 +80,14 @@ public class UserService {
                 return userRepository.findByRoleNot("TEACHER");
         }
 
-        public void updateUserByTeacher(String id, String name, String email, String phone,
+        public void updateUserByTeacher(String id,String username, String name, String email, String phone,
                         String role, String resetPassword, String newPassword) {
                 User user = getUserById(id);
 
                 if ("TEACHER".equals(role)) {
                         throw new RuntimeException("Cannot change user role to TEACHER");
                 }
-
+                user.setUsername(username);
                 user.setName(name);
                 user.setEmail(email);
                 user.setPhoneNumber(phone);

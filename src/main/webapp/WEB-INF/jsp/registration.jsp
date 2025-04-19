@@ -147,52 +147,59 @@
 
     <div class="register-container">
         <h1><spring:message code="register.create" text="Create Your Account"/></h1>
-        
-        <%--@elvariable id="user" type=""--%>
+
         <form:form action="${pageContext.request.contextPath}/register" method="post" modelAttribute="user">
             <div class="form-group">
                 <form:label path="username"><spring:message code="register.username"/></form:label>
-                <form:input path="username" type="text" placeholder="keithlee123"/>
+                <form:input path="username" type="text" placeholder="keithlee123" required="true"/>
                 <form:errors path="username" cssClass="error"/>
             </div>
-            
+
             <div class="form-group">
                 <form:label path="name"><spring:message code="register.fullName"/></form:label>
-                <form:input path="name" type="text" placeholder="Keith Lee"/>
+                <form:input path="name" type="text" placeholder="Keith Lee" required="true"/>
                 <form:errors path="name" cssClass="error"/>
             </div>
-            
+
             <div class="form-group">
                 <form:label path="email"><spring:message code="register.email"/></form:label>
-                <form:input path="email" type="email" placeholder="keithlee@live.hkmu.edu.hk"/>
+                <form:input path="email" type="email" placeholder="keithlee@live.hkmu.edu.hk"
+                            required="true" title="Email must contain ‘@’"/>
                 <form:errors path="email" cssClass="error"/>
             </div>
-            
+
             <div class="form-group">
                 <form:label path="phoneNumber"><spring:message code="register.phone"/></form:label>
-                <form:input path="phoneNumber" type="tel" placeholder="27112100"/>
+                <form:input path="phoneNumber" type="tel" placeholder="27112100" pattern="\d{8}"
+                            minlength="8" maxlength="8" required="true"
+                            title="Phone number must be exactly 8 digits (0‑9)"/>
                 <form:errors path="phoneNumber" cssClass="error"/>
             </div>
-            
+
             <div class="form-group">
                 <form:label path="password"><spring:message code="password"/></form:label>
-                <form:password path="password" placeholder="********"/>
+                <form:password path="password" placeholder="********"
+                               pattern="^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$"
+                               required="true"
+                               title="Must be at least 8 characters and include one number and one special character"/>
                 <div class="password-requirements">
                     <spring:message code="register.requirment"/>
                 </div>
                 <form:errors path="password" cssClass="error"/>
             </div>
-            
+
             <div class="form-group role-selector">
                 <form:hidden path="role" value="student"/>
             </div>
-            
+
             <button type="submit" class="register-btn"><spring:message code="createAccount"/></button>
-            
+
             <div class="login-link">
-                <spring:message code="register.message"/><a href="<c:url value='/login'/>"><spring:message code="register.signinHere"/>
+                <spring:message code="register.message"/>
+                <a href="<c:url value='/login'/>"><spring:message code="register.signinHere"/></a>
             </div>
         </form:form>
     </div>
+
 </body>
 </html>
