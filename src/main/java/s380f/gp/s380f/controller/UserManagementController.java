@@ -38,6 +38,7 @@ public class UserManagementController {
       @RequestParam String role,
       RedirectAttributes redirectAttributes) {
     try {
+      role = "STUDENT";
       userService.registerUser(username, password, name, email, phone, role);
       redirectAttributes.addFlashAttribute("successMessage", "User added successfully");
     } catch (Exception e) {

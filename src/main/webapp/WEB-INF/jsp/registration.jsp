@@ -146,7 +146,7 @@
     </div>
 
     <div class="register-container">
-        <h1><spring:message code="register.create" text="Create Your Account"/>t</h1>
+        <h1><spring:message code="register.create" text="Create Your Account"/></h1>
         
         <%--@elvariable id="user" type=""--%>
         <form:form action="${pageContext.request.contextPath}/register" method="post" modelAttribute="user">

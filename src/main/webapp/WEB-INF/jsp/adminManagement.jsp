@@ -255,7 +255,7 @@
     <div class="management-container">
         <c:if test="${not empty successMessage}">
             <div class="alert alert-success">
-                ${successMessage}
+                <spring:message code="successMessage"/>
             </div>
         </c:if>
         
@@ -293,7 +293,7 @@
                         <td>
                             <span class="user-role role-${user.role.toLowerCase()}">
                                  <c:choose >
-                                     <c:when test="${user.role == 'ADMIN'}">
+                                     <c:when test="${user.role eq 'ADMIN'}">
                                        <spring:message code="admin.admin"/>
                                      </c:when>
                                      <c:otherwise>
@@ -374,7 +374,7 @@
                 </div>
                 <div class="form-group">
                     <label for="editRole"><spring:message code="admin.role"/></label>
-                    <input type="text" id="editRole" name="role" value="STUDENT" readonly>
+                    <input type="text" id="editRole" name="role" value="" readonly>STUDENT
                 </div>
                 <div class="form-group">
                         <label><spring:message code="resetPassword"/></label>

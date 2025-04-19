@@ -118,7 +118,7 @@
     </div>
 
     <div class="nav">
-        <a href="index.jsp"> <spring:message code="index.homepage"/></a>
+        <a href="<c:url value='/'/>"> <spring:message code="index.homepage"/></a>
 
     </div>
 

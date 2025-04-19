@@ -214,7 +214,7 @@
             <div class="comment-form">
                 <form action="<c:url value='/polls/PollComment'/>" method="post">
                     <input type="hidden" name="pollId" value="${poll.id}">
-                    <textarea name="comment" placeholder="Share your thoughts about this poll..."></textarea>
+                    <textarea name="comment" placeholder="<spring:message code="poll.placeholder"/>"></textarea>
                     <div>
                         <button type="submit"><spring:message code="submit" text="Post Comment"/></button>
                     </div>
